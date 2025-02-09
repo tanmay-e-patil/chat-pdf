@@ -13,7 +13,7 @@ const FileUpload = () => {
     return (
         <div className='p-2 bg-white rounded-xl'>
             <div {...getRootProps({
-                className: 'dropzone border-dashed border-2 border-gray-300 p-4 rounded-xl cursor-pointe flex flex-col items-center justify-center'
+                className: 'dropzone border-dashed border-2 border-gray-300 p-4 rounded-xl cursor-pointe flex flex-col items-center justify-center cursor-pointer'
             })}>
                 <input {...getInputProps()} />
                 <>
