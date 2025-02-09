@@ -4,7 +4,7 @@ import {pgEnum, pgTable, text, timestamp, uuid, varchar} from 'drizzle-orm/pg-co
 export const userSystemEnum = pgEnum('user_system_enum', ['assistant', 'user'])
 
 export const chats = pgTable('chats', {
-    id: uuid('id').primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),  
     pdfName: text('pdf_name').notNull(),
     pdfUrl: text('pdf_url').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -13,7 +13,7 @@ export const chats = pgTable('chats', {
 })
 
 export const messages = pgTable('messages', {
-    id: uuid('id').primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     chatId: uuid('chat_id').references(() => chats.id).notNull(),
     message: text('message').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),

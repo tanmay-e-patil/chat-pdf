@@ -5,10 +5,12 @@ import { uploadToS3 } from '@/lib/s3';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const FileUpload = () => {
 
     const [uploading, setUploading] = React.useState(false);
+    const router = useRouter();
 
     const {mutate, isPending} = useMutation({
         mutationFn: async ({file_key, file_name}: {file_key: string, file_name: string}) => {
@@ -45,7 +47,9 @@ const FileUpload = () => {
                 } 
                 mutate(data, {
                     onSuccess: (data) => {
+                        toast.success('Chat created');
                         console.log(data);
+                        router.push(`/chat/${data.chat_id}`);
                     },
                     onError: (e) => {
                         console.log(e);
@@ -66,7 +70,7 @@ const FileUpload = () => {
             })}>
                 <input {...getInputProps()} />
                 {uploading || isPending ? (
-                    <Loader2 className='w-10 h-10 text-purple-600 animate-spinlll' />): (<>
+                    <Loader2 className='w-10 h-10 text-purple-600 animate-spin' />): (<>
                     <Inbox className='w-10 h-10 text-purple-600' />
                     <p className='mt-2 text-sm text-slate-400'>Drop PDF Here</p>
                     </>)}
