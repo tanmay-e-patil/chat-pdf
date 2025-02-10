@@ -51,15 +51,17 @@ const ChatComponent = ({ chatId, userId }: Props) => {
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white"
       >
-        <Input
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Ask any question..."
-          className="w-full"
-        />
-        <Button>
-          <Send className="h-4 w-4" />
-        </Button>
+        <div className="flex flex-row justify-between">
+          <Input
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Ask any question..."
+            className="w-full"
+          />
+          <Button>
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
       </form>
     </div>
   );
