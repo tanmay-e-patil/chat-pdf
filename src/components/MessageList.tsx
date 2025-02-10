@@ -32,7 +32,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
               {
                 "bg-blue-600 text-white": message.role === "user",
                 "bg-gray-300 text-white": message.role === "assistant",
-              }
+              },
             )}
           >
             <p>{message.content}</p>

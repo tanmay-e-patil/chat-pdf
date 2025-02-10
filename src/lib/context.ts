@@ -6,7 +6,7 @@ export async function getContext(query: string, fileKey: string) {
   const queryEmbeddings = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
   const qualifyDocs = matches?.filter(
-    (match) => match.score && match.score > 0.7
+    (match) => match.score && match.score > 0.7,
   );
   type Metadata = {
     pageNumber: number;
@@ -19,7 +19,7 @@ export async function getContext(query: string, fileKey: string) {
 
 export async function getMatchesFromEmbeddings(
   embeddings: number[],
-  fileKey: string
+  fileKey: string,
 ) {
   const pinecone = getPineconeClient();
   const pineconeIndex = await pinecone.Index("chat-pdf");
