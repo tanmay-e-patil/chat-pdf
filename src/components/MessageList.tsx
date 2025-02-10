@@ -26,8 +26,9 @@ const MessageList = ({ messages }: Props) => {
                 "bg-gray-300 text-white": message.role === "assistant",
               }
             )}
-          ></div>
-          <p>{message.content}</p>
+          >
+            <p>{message.content}</p>
+          </div>
         </div>
       ))}
     </div>
