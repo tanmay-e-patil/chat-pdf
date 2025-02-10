@@ -12,6 +12,20 @@ type Props = {
 };
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubscription = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/stripe");
+      const data = await response.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="w-full h-screen p-4 text-gray-200 bg-gray-900">
       <Link href="/">
@@ -42,6 +56,13 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           <Link href="/">Home</Link>
           <Link href="/">Source</Link>
         </div>
+        <Button
+          className="mt-2 text-white bg-slate-700"
+          onClick={handleSubscription}
+          disabled={loading}
+        >
+          Upgrade to Pro
+        </Button>
       </div>
     </div>
   );
