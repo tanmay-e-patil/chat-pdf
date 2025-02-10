@@ -1,12 +1,20 @@
 import React from "react";
 import { Message } from "@ai-sdk/react";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   messages: Message[];
+  isLoading: boolean;
 };
 
-const MessageList = ({ messages }: Props) => {
+const MessageList = ({ messages, isLoading }: Props) => {
+  if (isLoading)
+    return (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Loader2 className="h-10 w-10" />
+      </div>
+    );
   if (!messages) return <></>;
   return (
     <div className="flex flex-col gap-2 px-4">

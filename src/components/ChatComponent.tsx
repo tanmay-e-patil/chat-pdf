@@ -1,24 +1,52 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 
 import { useChat } from "@ai-sdk/react";
 import MessageList from "./MessageList";
+import { useQuery } from "@tanstack/react-query";
 
-// type Props = {}
+type Props = {
+  chatId: string;
+  userId: string;
+};
 
-const ChatComponent = () => {
+const ChatComponent = ({ chatId, userId }: Props) => {
+  const { data, isPending } = useQuery({
+    queryKey: ["chat", chatId],
+    queryFn: async () => {
+      const response = await fetch(`/api/chat/${chatId}/messages`);
+      const json = await response.json();
+      return json;
+    },
+  });
+
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: "/api/ai",
+    body: {
+      chatId,
+      userId,
+    },
+    initialMessages: data || [],
   });
+  useEffect(() => {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer?.scrollTo({
+      top: messageContainer.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
   return (
-    <div className="relative max-h-screen overflow-scroll">
+    <div
+      className="relative max-h-screen overflow-scroll"
+      id="message-container"
+    >
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
         <h3 className="text-xl font-bold">Chat</h3>
       </div>
-      <MessageList messages={messages} />
+      <MessageList messages={messages} isLoading={isPending} />
       <form
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white"
