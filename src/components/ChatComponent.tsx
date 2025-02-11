@@ -40,25 +40,25 @@ const ChatComponent = ({ chatId, userId }: Props) => {
   }, [messages]);
   return (
     <div
-      className="relative max-h-screen overflow-scroll"
+      className="relative max-h-screen overflow-scroll scrollbar-hidden bg-gray-900"
       id="message-container"
     >
-      <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-xl font-bold">Chat</h3>
+      <div className="sticky top-0 inset-x-0 p-2 bg-gray-800 h-fit ">
+        <h3 className="text-xl font-bold text-white">Chat</h3>
       </div>
       <MessageList messages={messages} isLoading={isPending} />
       <form
         onSubmit={handleSubmit}
-        className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white"
+        className="sticky bottom-0 inset-x-0 px-2 py-4 bg-gray-800"
       >
         <div className="flex flex-row justify-between">
           <Input
             value={input}
             onChange={handleInputChange}
             placeholder="Ask any question..."
-            className="w-full"
+            className="w-full text-white"
           />
-          <Button>
+          <Button variant="secondary">
             <Send className="h-4 w-4" />
           </Button>
         </div>
