@@ -5,10 +5,9 @@ import { NextResponse } from "next/server";
 
 export const GET = async (
   req: Request,
-  context: { params: { chatId: string } },
+  { params }: { params: Promise<{ chatId: string }> },
 ) => {
-  const { params } = context;
-  const chatId = params.chatId;
+  const { chatId } = await params;
   const _messages = await db
     .select()
     .from(messages)
