@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import { SignedOut, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { ArrowRight, LogInIcon } from "lucide-react";
@@ -44,7 +44,7 @@ export default async function Home() {
               </Link>
             )}
             <div className="ml-3">
-              <SubscriptionButton isPro={isPro} />
+              {isAuth && <SubscriptionButton isPro={isPro} />}
             </div>
           </div>
 
