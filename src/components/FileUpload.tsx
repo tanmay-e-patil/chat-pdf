@@ -26,10 +26,16 @@ const FileUpload = () => {
         },
         body: JSON.stringify({ file_key, file_name }),
       });
-      if (!response.ok) {
-        throw new Error("Error creating chat");
-      }
+
       const resJson = await response.json();
+      if (!response.ok) {
+        if (response.status === 403) {
+          toast.error("Error creating chat: " + resJson.error);
+        } else {
+          toast.error("Error creating chat");
+        }
+        return;
+      }
       return resJson;
     },
   });
@@ -59,7 +65,6 @@ const FileUpload = () => {
           },
           onError: (e) => {
             console.log(e);
-            toast.error("Error creating chat");
           },
         });
       } catch (error) {
