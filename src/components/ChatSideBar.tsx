@@ -5,27 +5,15 @@ import React from "react";
 import { Button } from "./ui/button";
 import { MessageCircle, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import SubscriptionButton from "./SubscriptionButton";
 
 type Props = {
   chats: DrizzleChat[];
   chatId: string;
+  isPro: boolean;
 };
 
-const ChatSideBar = ({ chats, chatId }: Props) => {
-  const [loading, setLoading] = React.useState(false);
-
-  const handleSubscription = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/stripe");
-      const data = await response.json();
-      window.location.href = data.url;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
   return (
     <div className="w-full h-screen p-4 text-gray-200 bg-gray-900">
       <Link href="/">
@@ -56,13 +44,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           <Link href="/">Home</Link>
           <Link href="/">Source</Link>
         </div>
-        <Button
-          className="mt-2 text-white bg-slate-700"
-          onClick={handleSubscription}
-          disabled={loading}
-        >
-          Upgrade to Pro
-        </Button>
+        <SubscriptionButton isPro={isPro} />
       </div>
     </div>
   );
