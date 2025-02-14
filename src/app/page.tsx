@@ -33,6 +33,7 @@ export default async function Home() {
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
             <h1 className="mr-3 text-5xl font-semibold">Chat with any pdf</h1>
+
             <UserButton afterSignOutUrl="/" />
           </div>
           <div className="flex mt-2">
@@ -56,12 +57,22 @@ export default async function Home() {
             {isAuth ? (
               <FileUpload></FileUpload>
             ) : (
-              <Link href="/sign-in">
-                <Button>
-                  Login to get Started!
-                  <LogInIcon className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+              <div>
+                <Link href="/sign-in">
+                  <Button>
+                    Login to get Started!
+                    <LogInIcon className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link
+                  href="https://github.com/tanmay-e-patil/chat-pdf"
+                  target="_blank"
+                >
+                  <Button className="mt-2 mx-2">
+                    View Source Code <ArrowRight className="ml-2"></ArrowRight>
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
         </div>
