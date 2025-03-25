@@ -13,6 +13,5 @@ export const GET = async (
     .from(messages)
     .where(eq(messages.chatId, chatId))
     .execute();
-  console.log(_messages);
   return NextResponse.json(_messages, { status: 200 });
 };

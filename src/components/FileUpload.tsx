@@ -43,7 +43,6 @@ const FileUpload = () => {
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
     onDrop: async (acceptedFiles) => {
-      console.log(acceptedFiles);
       const file = acceptedFiles[0];
       if (file.size > 10 * 1024 * 1024) {
         toast.error("File size should be less than 10MB");
@@ -59,7 +58,6 @@ const FileUpload = () => {
         }
         mutate(data, {
           onSuccess: (data) => {
-            console.log(data);
             router.push(`/chat/${data.chat_id}`);
           },
           onError: (e) => {

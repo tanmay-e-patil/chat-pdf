@@ -27,12 +27,7 @@ export async function uploadToS3(file: File) {
       .promise();
 
     await upload.then(() => {
-      console.log(
-        "Successfully uploaded data to " +
-          process.env.NEXT_PUBLIC_S3_BUCKET_NAME +
-          "/" +
-          file_key,
-      );
+      console.log("Successfully uploaded data to S3");
     });
 
     return Promise.resolve({ file_key, file_name: file.name });

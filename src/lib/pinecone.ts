@@ -27,21 +27,15 @@ type PDFPage = {
 };
 export async function loadS3IntoPinecone(file_key: string) {
   const file_name = await downloadFromS3(file_key);
-  console.log(file_name);
   if (!file_name) {
     throw new Error("Failed to download file from S3");
   }
   const loader = new PDFLoader(file_name);
   const pages = (await loader.load()) as PDFPage[];
-  console.log("Preparing documents");
   const docs = await Promise.all(pages.map(prepareDocument));
-  console.log("Embedding documents");
   const vectors = await Promise.all(docs.flat().map(embedDocument));
-  console.log("Connecting to Pinecone");
   const pinecone = getPineconeClient();
-  console.log("Creating index");
   const pineconeIndex = await pinecone.Index("chat-pdf");
-  console.log("Inserting vectors");
   const namespace = convertToAscii(file_key);
   await pineconeIndex.namespace(namespace).upsert(vectors);
 

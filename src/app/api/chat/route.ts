@@ -46,7 +46,6 @@ export async function POST(req: Request) {
       .returning({
         insertedId: chats.id,
       });
-    console.log(chatId[0].insertedId, chatId);
     return NextResponse.json(
       { chat_id: chatId[0].insertedId },
       { status: 200 },
