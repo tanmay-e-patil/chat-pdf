@@ -8,12 +8,13 @@ import { checkSubscription } from "@/lib/subscriptions";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 
 export default async function Home() {
   const { userId } = await auth();
   const isAuth = !!userId;
   const isPro = await checkSubscription();
+  let isUploadAllowed = true;
 
   let firstChat;
   if (userId) {
@@ -24,6 +25,18 @@ export default async function Home() {
       .execute();
     if (firstChat) {
       firstChat = firstChat[0];
+    }
+    if (!isPro) {
+      const numChats = await db
+        .select({
+          count: count(),
+        })
+        .from(chats)
+        .where(eq(chats.userId, userId))
+        .execute();
+      if (numChats[0].count >= 1) {
+        isUploadAllowed = false;
+      }
     }
   }
 
@@ -55,8 +68,31 @@ export default async function Home() {
           </p>
           <div className="w-full mt-4">
             {isAuth ? (
-              <FileUpload></FileUpload>
+              <div>
+                {isUploadAllowed ? (
+                  <div>
+                    <FileUpload></FileUpload>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className="bg-red-500 rounded-sm">
+                      PDF limit exceeded. Please upgrade to pro
+                    </h1>
+                  </div>
+                )}
+              </div>
             ) : (
+              // <div
+              //   onClick={() => {
+              //     if (!isUploadAllowed) {
+              //       toast.error(
+              //         "Error uploading pdf: PDF limit exceeded. Please upgrade to pro",
+              //       );
+              //     }
+              //   }}
+              // >
+              //   <FileUpload></FileUpload>
+              // </div>
               <div>
                 <Link href="/sign-in">
                   <Button>
