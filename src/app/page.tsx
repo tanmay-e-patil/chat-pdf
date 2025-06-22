@@ -9,7 +9,6 @@ import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { count, eq } from "drizzle-orm";
-import toast from "react-hot-toast";
 
 export default async function Home() {
   const { userId } = await auth();
