@@ -41,6 +41,14 @@ export async function loadS3IntoPinecone(file_key: string) {
 
   return docs[0];
 }
+
+export async function deleteFromPinecone(file_key: string) {
+  const pinecone = getPineconeClient();
+  const pineconeIndex = await pinecone.Index("chat-pdf");
+  const namespace = convertToAscii(file_key);
+  await pineconeIndex.namespace(namespace).deleteAll();
+}
+
 export const trucateStringByBytes = (str: string, bytes: number) => {
   const encoder = new TextEncoder();
   return new TextDecoder("utf-8").decode(encoder.encode(str).slice(0, bytes));
