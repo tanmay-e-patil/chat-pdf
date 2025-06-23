@@ -1,18 +1,34 @@
-## Getting Started
+## Project Overview
 
-First, run the development server:
+This project is a web application that allows users to interact with PDF documents using chat-based features. It leverages modern web technologies and integrates with several third-party services for authentication, storage, and AI-powered functionalities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- User authentication and authorization
+- Upload and manage PDF documents
+- Chat interface for querying PDF content
+- Integration with OpenAI for AI-powered responses
+- Secure file storage using S3-compatible services
+- Payment processing with Stripe
+
+## Technologies Used
+
+- Next.js
+- Clerk (Authentication)
+- AWS S3
+- Pinecone (Vector database)
+- OpenAI API
+- Stripe (Payments)
+- NeonDB 
+
+## Setup Instructions
+
+1. Clone the repository.
+2. Install dependencies using your preferred package manager (`npm`, `yarn`, `pnpm`, or `bun`).
+3. Configure the required environment variables as shown above.
+4. Run the development server.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
 
 ## Environment Variables
 
@@ -37,4 +53,3 @@ OPENAI_API_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 NEXT_BASE_URL=http://localhost:3000
-```
