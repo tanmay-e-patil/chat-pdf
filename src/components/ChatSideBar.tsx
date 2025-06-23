@@ -16,7 +16,7 @@ type Props = {
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
   const router = useRouter();
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async ({ id }: { id: string }) => {
       const response = await fetch(`/api/chat/${id}`, {
         method: "DELETE",
@@ -58,11 +58,12 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
                 {chat.pdfName}
               </p>
-              <Button className="px-2 bg-red-500" onClick={() => {
-                mutate(
-                  { id: chat.id }
-                )
-                }}>
+              <Button
+                className="px-2 bg-red-500"
+                onClick={() => {
+                  mutate({ id: chat.id });
+                }}
+              >
                 <Trash2 className="size-5 "></Trash2>
               </Button>
             </div>
