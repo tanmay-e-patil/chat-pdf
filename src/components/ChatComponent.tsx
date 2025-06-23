@@ -39,14 +39,16 @@ const ChatComponent = ({ chatId, userId }: Props) => {
     });
   }, [messages]);
   return (
-    <div
-      className="relative h-screen overflow-scroll scrollbar-hidden bg-gray-900"
-      id="message-container"
-    >
+    <div className="relative h-screen flex flex-col bg-gray-900">
       <div className="sticky top-0 inset-x-0 p-2 bg-gray-800 h-fit ">
         <h3 className="text-xl font-bold text-white">Chat</h3>
       </div>
-      <MessageList messages={messages} isLoading={isPending} />
+      <div
+        className="flex-1 overflow-y-auto scrollbar-hidden px-2"
+        id="message-container"
+      >
+        <MessageList messages={messages} isLoading={isPending} />
+      </div>
       <form
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-gray-800"
