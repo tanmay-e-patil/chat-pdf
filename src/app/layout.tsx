@@ -8,13 +8,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <Providers>
-        <html lang="en" suppressHydrationWarning>
-          <body>{children}</body>
-        </html>
-        <Toaster />
-      </Providers>
-    </ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ClerkProvider>
+          <Providers>
+            {children}
+            <Toaster />
+          </Providers>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
