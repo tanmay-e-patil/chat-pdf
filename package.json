@@ -12,7 +12,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.1.9",
     "@ai-sdk/provider": "^1.0.7",
-    "@clerk/nextjs": "^6.11.1",
+    "@clerk/nextjs": "^6.23.3",
     "@langchain/community": "^0.3.29",
     "@langchain/core": "^0.3.39",
     "@neondatabase/serverless": "^0.10.4",
