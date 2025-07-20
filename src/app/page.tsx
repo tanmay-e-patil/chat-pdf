@@ -83,17 +83,6 @@ export default async function Home() {
                 )}
               </div>
             ) : (
-              // <div
-              //   onClick={() => {
-              //     if (!isUploadAllowed) {
-              //       toast.error(
-              //         "Error uploading pdf: PDF limit exceeded. Please upgrade to pro",
-              //       );
-              //     }
-              //   }}
-              // >
-              //   <FileUpload></FileUpload>
-              // </div>
               <div>
                 <Link href="/sign-in">
                   <Button>
