@@ -9,6 +9,7 @@ import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { count, eq } from "drizzle-orm";
+import { Uploader } from "@/components/file-uploader/Uploader";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -71,7 +72,7 @@ export default async function Home() {
               <div>
                 {isUploadAllowed ? (
                   <div>
-                    <FileUpload></FileUpload>
+                    <Uploader />
                   </div>
                 ) : (
                   <div>

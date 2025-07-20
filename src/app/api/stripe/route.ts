@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { subscriptions } from "@/lib/db/schema";
+import { env } from "@/lib/env/server";
 import { stripe } from "@/lib/stripe";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
@@ -19,7 +20,7 @@ export async function GET() {
       .where(eq(subscriptions.userId, userId))
       .execute();
 
-    const returnUrl = `${process.env.NEXT_BASE_URL}/`;
+    const returnUrl = `${env.NEXT_BASE_URL}/`;
     if (_userSubscriptions[0] && _userSubscriptions[0].stripeCustomerId) {
       const stripeSession = await stripe.billingPortal.sessions.create({
         customer: _userSubscriptions[0].stripeCustomerId,
