@@ -12,6 +12,8 @@ import {
 } from "./RenderState";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface UploaderState {
   id: string | null;
@@ -29,6 +31,36 @@ export function Uploader() {
     id: null,
     uploading: false,
     progress: 0,
+  });
+
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({
+      file_key,
+      file_name,
+    }: {
+      file_key: string;
+      file_name: string;
+    }) => {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file_key, file_name }),
+      });
+
+      const resJson = await response.json();
+      if (!response.ok) {
+        if (response.status === 403) {
+          toast.error("Error creating chat: " + resJson.error);
+        } else {
+          toast.error("Error creating chat");
+        }
+        return;
+      }
+      return resJson;
+    },
   });
 
   function renderContent() {
@@ -102,6 +134,17 @@ export function Uploader() {
             }));
 
             toast.success("File uploaded successfully");
+            mutate(
+              { file_key: key, file_name: file.name },
+              {
+                onSuccess: (data) => {
+                  router.push(`/chat/${data.chat_id}`);
+                },
+                onError: (e) => {
+                  console.log(e);
+                },
+              },
+            );
             resolve();
           } else {
             reject(new Error("Upload failed..."));

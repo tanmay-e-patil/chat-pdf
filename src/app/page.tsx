@@ -3,7 +3,6 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { ArrowRight, LogInIcon } from "lucide-react";
-import FileUpload from "@/components/FileUpload";
 import { checkSubscription } from "@/lib/subscriptions";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";

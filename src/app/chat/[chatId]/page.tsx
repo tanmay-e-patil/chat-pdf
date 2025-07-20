@@ -32,8 +32,9 @@ const ChatPage = async (props: Props) => {
     return redirect("/");
   }
 
-  console.log(currentChat);
+  
 
+  
   return (
     <div className="flex overflow-scroll scrollbar-hidden">
       <div className="flex w-full  overflow-scroll scrollbar-hidden">
