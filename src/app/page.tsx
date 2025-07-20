@@ -3,12 +3,12 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { ArrowRight, LogInIcon } from "lucide-react";
-import FileUpload from "@/components/FileUpload";
 import { checkSubscription } from "@/lib/subscriptions";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { count, eq } from "drizzle-orm";
+import { Uploader } from "@/components/file-uploader/Uploader";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -71,7 +71,7 @@ export default async function Home() {
               <div>
                 {isUploadAllowed ? (
                   <div>
-                    <FileUpload></FileUpload>
+                    <Uploader />
                   </div>
                 ) : (
                   <div>
@@ -82,17 +82,6 @@ export default async function Home() {
                 )}
               </div>
             ) : (
-              // <div
-              //   onClick={() => {
-              //     if (!isUploadAllowed) {
-              //       toast.error(
-              //         "Error uploading pdf: PDF limit exceeded. Please upgrade to pro",
-              //       );
-              //     }
-              //   }}
-              // >
-              //   <FileUpload></FileUpload>
-              // </div>
               <div>
                 <Link href="/sign-in">
                   <Button>

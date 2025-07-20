@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { subscriptions } from "@/lib/db/schema";
+import { env } from "@/lib/env/server";
 import { stripe } from "@/lib/stripe";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (error) {
     console.error(error);

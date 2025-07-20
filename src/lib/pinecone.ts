@@ -1,3 +1,4 @@
+import "server-only";
 import {
   Pinecone,
   PineconeRecord,
@@ -12,9 +13,10 @@ import {
 import md5 from "md5";
 import { getEmbeddings } from "./embeddings";
 import { convertToAscii } from "./utils";
+import { env } from "./env/server";
 
 export const getPineconeClient = () => {
-  return new Pinecone({ apiKey: process.env.PINECONE_API_KEY! });
+  return new Pinecone({ apiKey: env.PINECONE_API_KEY });
 };
 
 type PDFPage = {

@@ -1,7 +1,9 @@
+import "server-only";
 import { OpenAIApi, Configuration } from "openai-edge";
+import { env } from "./env/server";
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);

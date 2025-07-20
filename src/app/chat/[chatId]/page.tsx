@@ -32,8 +32,6 @@ const ChatPage = async (props: Props) => {
     return redirect("/");
   }
 
-  console.log(currentChat);
-
   return (
     <div className="flex overflow-scroll scrollbar-hidden">
       <div className="flex w-full  overflow-scroll scrollbar-hidden">
@@ -41,7 +39,7 @@ const ChatPage = async (props: Props) => {
           <ChatSideBar chats={_chats} chatId={chatId} />
         </div>
         <div className=" overflow-scroll scrollbar-hidden flex-[5]">
-          <PDFViewer pdf_url={currentChat.pdfUrl} />
+          <PDFViewer file_key={currentChat.fileKey} />
         </div>
         <div className="flex-[3] border-l-slate-200 h-screen flex flex-col">
           <ChatComponent chatId={chatId} userId={userId} />
