@@ -34,7 +34,7 @@ export function Uploader() {
   });
 
   const router = useRouter();
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async ({
       file_key,
       file_name,
@@ -90,7 +90,7 @@ export function Uploader() {
     }));
 
     try {
-      const presignedResponse = await fetch("/api/s3/upload", {
+      const presignedResponse = await fetch("/api/s3/presign/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
