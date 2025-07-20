@@ -4,8 +4,13 @@ import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { Card, CardContent } from "../ui/card";
 import { cn } from "@/lib/utils";
-import { RenderEmptyState, RenderErrorState } from "./RenderState";
-import { useState } from "react";
+import {
+  RenderEmptyState,
+  RenderErrorState,
+  RenderUploadedState,
+  RenderUploadingState,
+} from "./RenderState";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 interface UploaderState {
@@ -14,7 +19,6 @@ interface UploaderState {
   uploading: boolean;
   progress: number;
   key?: string;
-  isDeleting: boolean;
   error: boolean;
   objectUrl?: string;
 }
@@ -25,18 +29,22 @@ export function Uploader() {
     id: null,
     uploading: false,
     progress: 0,
-    isDeleting: false,
   });
 
   function renderContent() {
     if (fileState.uploading) {
-      return <h1>Uploading...</h1>;
+      return (
+        <RenderUploadingState
+          file={fileState.file as File}
+          progress={fileState.progress}
+        />
+      );
     }
     if (fileState.error) {
       return <RenderErrorState />;
     }
     if (fileState.objectUrl) {
-      return <h1>Uploaded file</h1>;
+      return <RenderUploadedState />;
     }
 
     return <RenderEmptyState isDragActive={isDragActive} />;
@@ -117,6 +125,14 @@ export function Uploader() {
       }));
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (fileState.objectUrl && !fileState.objectUrl.startsWith("http")) {
+        URL.revokeObjectURL(fileState.objectUrl);
+      }
+    };
+  }, [fileState.objectUrl]);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
@@ -132,7 +148,6 @@ export function Uploader() {
         objectUrl: URL.createObjectURL(file),
         error: false,
         id: uuidv4(),
-        isDeleting: false,
       });
 
       uploadFile(file);
