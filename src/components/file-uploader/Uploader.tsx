@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import * as Sentry from "@sentry/nextjs";
 
 interface UploaderState {
   id: string | null;
@@ -166,6 +167,7 @@ export function Uploader() {
         uploading: false,
         error: true,
       }));
+      Sentry.captureException(error);
     }
   }
 
@@ -180,7 +182,7 @@ export function Uploader() {
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
     multiple: false,
-    maxSize: 50 * 1024 * 1024,
+    maxSize: 10 * 1024 * 1024,
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
 

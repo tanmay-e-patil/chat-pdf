@@ -1,5 +1,6 @@
 import { getS3PresignedUrl } from "@/lib/s3";
 import { NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 export async function GET(request: Request) {
   try {
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(response);
   } catch (error) {
+    Sentry.captureException(error);
     return NextResponse.json(
       { error: "Missing or invalid object key" },
       { status: 500 },
