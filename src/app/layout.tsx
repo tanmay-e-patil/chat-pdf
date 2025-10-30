@@ -9,6 +9,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          src="https://rybbit.tanmayep.dev/api/script.js"
+          data-site-id="3"
+          data-track-errors="true"
+          data-session-replay="true"
+          defer
+        ></script>
+      </head>
       <body>
         <ClerkProvider>
           <Providers>
