@@ -14,7 +14,7 @@
     "@ai-sdk/provider": "^1.0.7",
     "@aws-sdk/client-s3": "^3.848.0",
     "@aws-sdk/s3-request-presigner": "^3.848.0",
-    "@clerk/nextjs": "^6.23.3",
+    "@clerk/nextjs": "^6.36.0",
     "@langchain/community": "^0.3.29",
     "@langchain/core": "^0.3.39",
     "@neondatabase/serverless": "^0.10.4",
