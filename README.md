@@ -24,9 +24,9 @@ This project is a web application that allows users to interact with PDF documen
 ## Setup Instructions
 
 1. Clone the repository.
-2. Install dependencies using your preferred package manager (`npm`, `yarn`, `pnpm`, or `bun`).
+2. Install dependencies with `pnpm install`.
 3. Configure the required environment variables as shown above.
-4. Run the development server.
+4. Run the development server with `pnpm dev`.
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 
