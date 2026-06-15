@@ -19,7 +19,7 @@
     "@clerk/nextjs": "^6.39.2",
     "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.1.49",
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "^1.1.0",
     "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^4.1.0",
     "@radix-ui/react-progress": "^1.1.7",
