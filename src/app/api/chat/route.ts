@@ -9,11 +9,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const userId = await (await auth()).userId;
-  const isPro = await checkSubscription();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const isPro = await checkSubscription(userId);
 
   if (!isPro) {
     const numChats = await db

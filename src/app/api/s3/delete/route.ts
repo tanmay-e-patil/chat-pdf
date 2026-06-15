@@ -2,7 +2,6 @@ import { envClient } from "@/lib/env/client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { NextResponse } from "next/server";
 import { S3 } from "@/lib/s3/S3Client";
-import * as Sentry from "@sentry/nextjs";
 
 export async function DELETE(request: Request) {
   try {
@@ -27,7 +26,7 @@ export async function DELETE(request: Request) {
       { status: 200 },
     );
   } catch (error) {
-    Sentry.captureException(error);
+    console.error(error);
     return NextResponse.json(
       { error: "Missing or invalid object key" },
       { status: 500 },

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { ArrowRight, LogInIcon } from "lucide-react";
@@ -13,30 +12,29 @@ import { Uploader } from "@/components/file-uploader/Uploader";
 export default async function Home() {
   const { userId } = await auth();
   const isAuth = !!userId;
-  const isPro = await checkSubscription();
+  let isPro = false;
   let isUploadAllowed = true;
 
   let firstChat;
   if (userId) {
-    firstChat = await db
-      .select()
-      .from(chats)
-      .where(eq(chats.userId, userId))
-      .execute();
-    if (firstChat) {
-      firstChat = firstChat[0];
-    }
-    if (!isPro) {
+    [isPro, firstChat] = await Promise.all([
+      checkSubscription(userId),
+      db.select().from(chats).where(eq(chats.userId, userId)).execute(),
+    ]);
+
+    if (firstChat && !isPro) {
       const numChats = await db
-        .select({
-          count: count(),
-        })
+        .select({ count: count() })
         .from(chats)
         .where(eq(chats.userId, userId))
         .execute();
       if (numChats[0].count >= 1) {
         isUploadAllowed = false;
       }
+    }
+
+    if (firstChat) {
+      firstChat = firstChat[0];
     }
   }
 
@@ -46,8 +44,6 @@ export default async function Home() {
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
             <h1 className="mr-3 text-5xl font-semibold">Chat with any pdf</h1>
-
-            <UserButton afterSignOutUrl="/" />
           </div>
           <div className="flex mt-2">
             {isAuth && firstChat && (

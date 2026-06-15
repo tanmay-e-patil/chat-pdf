@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { UserButton } from "@clerk/nextjs";
 
 type Props = {
   chats: DrizzleChat[];
@@ -38,14 +39,14 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   });
 
   return (
-    <div className="w-full h-screen p-4 text-gray-200 bg-gray-900">
+    <div className="w-full h-screen p-4 text-gray-200 bg-gray-900 flex flex-col">
       <Link href="/">
         <Button className="w-full border-dashed border-white border">
           <PlusCircle className="mr-2 w-4 h-4"></PlusCircle>
           New PDF
         </Button>
       </Link>
-      <div className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-col gap-2 mt-4 flex-1 overflow-y-auto scrollbar-hidden">
         {chats.map((chat) => (
           <Link key={chat.id} href={`/chat/${chat.id}`}>
             <div
@@ -69,6 +70,9 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
             </div>
           </Link>
         ))}
+      </div>
+      <div className="mt-4 flex items-center justify-center border-t border-white/10 pt-4">
+        <UserButton afterSignOutUrl="/" showName />
       </div>
     </div>
   );

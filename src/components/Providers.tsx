@@ -7,10 +7,6 @@ const queryClient = new QueryClient();
 
 export default function Providers({ children }: Props) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }

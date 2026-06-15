@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import * as Sentry from "@sentry/nextjs";
 
 interface UploaderState {
   id: string | null;
@@ -161,13 +160,13 @@ export function Uploader() {
       });
     } catch (error) {
       toast.error("Something went wrong");
+      console.error(error);
       setFileState((prev) => ({
         ...prev,
         progress: 0,
         uploading: false,
         error: true,
       }));
-      Sentry.captureException(error);
     }
   }
 

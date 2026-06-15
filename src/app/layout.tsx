@@ -1,7 +1,7 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({
   children,
 }: {
@@ -19,12 +19,10 @@ export default function RootLayout({
         ></script>
       </head>
       <body>
-        <ClerkProvider>
-          <Providers>
-            {children}
-            <Toaster />
-          </Providers>
-        </ClerkProvider>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

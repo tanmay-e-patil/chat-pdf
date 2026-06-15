@@ -5,7 +5,6 @@ import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3 } from "@/lib/s3/S3Client";
-import * as Sentry from "@sentry/nextjs";
 
 const fileUploadSchema = z.object({
   fileName: z.string().min(1, { message: "File name is required" }),
@@ -44,7 +43,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(response);
   } catch (error) {
-    Sentry.captureException(error);
+    console.error(error);
     return NextResponse.json(
       {
         error: "Failed to generate presigned URL",
