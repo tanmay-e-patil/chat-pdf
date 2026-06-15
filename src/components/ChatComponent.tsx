@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,23 +15,34 @@ type Props = {
 };
 
 const ChatComponent = ({ chatId, userId }: Props) => {
+  const [input, setInput] = useState("");
   const { data, isPending } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
       const response = await fetch(`/api/chat/${chatId}/messages`);
       const json = await response.json();
-      return json;
+      return json.map(toUIMessage);
     },
   });
 
-  const { input, handleInputChange, handleSubmit, messages } = useChat({
-    api: "/api/ai",
-    body: {
-      chatId,
-      userId,
-    },
-    initialMessages: data || [],
+  const { messages, sendMessage, setMessages } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/ai",
+      body: { chatId, userId },
+    }),
   });
+
+  useEffect(() => {
+    if (data) setMessages(data);
+  }, [data, setMessages]);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const text = input.trim();
+    if (!text) return;
+    sendMessage({ parts: [{ type: "text", text }] });
+    setInput("");
+  };
   useEffect(() => {
     const messageContainer = document.getElementById("message-container");
     messageContainer?.scrollTo({
@@ -56,7 +68,7 @@ const ChatComponent = ({ chatId, userId }: Props) => {
         <div className="flex flex-row justify-between">
           <Input
             value={input}
-            onChange={handleInputChange}
+            onChange={(event) => setInput(event.target.value)}
             placeholder="Ask any question..."
             className="w-full text-white"
           />
@@ -70,3 +82,11 @@ const ChatComponent = ({ chatId, userId }: Props) => {
 };
 
 export default ChatComponent;
+
+function toUIMessage(message: { id: string; role: "user" | "assistant"; content: string }): UIMessage {
+  return {
+    id: message.id,
+    role: message.role,
+    parts: [{ type: "text", text: message.content }],
+  };
+}

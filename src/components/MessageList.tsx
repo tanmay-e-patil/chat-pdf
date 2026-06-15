@@ -1,10 +1,10 @@
 import React from "react";
-import { Message } from "@ai-sdk/react";
+import { type UIMessage } from "ai";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 type Props = {
-  messages: Message[];
+  messages: UIMessage[];
   isLoading: boolean;
 };
 
@@ -35,7 +35,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
               },
             )}
           >
-            <p>{message.content}</p>
+            <p>{getMessageText(message)}</p>
           </div>
         </div>
       ))}
@@ -44,3 +44,10 @@ const MessageList = ({ messages, isLoading }: Props) => {
 };
 
 export default MessageList;
+
+function getMessageText(message: UIMessage) {
+  return message.parts
+    .filter((part) => part.type === "text")
+    .map((part) => part.text)
+    .join("\n");
+}
