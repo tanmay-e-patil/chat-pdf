@@ -51,7 +51,7 @@ export default async function UploadPage() {
           href="/"
           className="flex items-center gap-3 text-sm text-slate-300 transition hover:text-white"
         >
-          <ArrowLeft className="size-4" /> Back to landing
+          <ArrowLeft className="size-4" /> Back
         </Link>
         <div className="flex items-center gap-3">
           {firstChat && (

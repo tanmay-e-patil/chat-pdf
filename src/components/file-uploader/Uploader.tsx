@@ -1,19 +1,19 @@
 "use client";
 
-import { useDropzone } from "react-dropzone";
-import toast from "react-hot-toast";
-import { Card, CardContent } from "../ui/card";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { type FileRejection, useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
+import { Card, CardContent } from "../ui/card";
 import {
   RenderEmptyState,
   RenderErrorState,
   RenderUploadedState,
   RenderUploadingState,
 } from "./RenderState";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 interface UploaderState {
   id: string | null;
@@ -22,8 +22,10 @@ interface UploaderState {
   progress: number;
   key?: string;
   error: boolean;
+  errorMessage?: string;
   objectUrl?: string;
 }
+
 export function Uploader() {
   const [fileState, setFileState] = useState<UploaderState>({
     error: false,
@@ -52,11 +54,11 @@ export function Uploader() {
 
       const resJson = await response.json();
       if (!response.ok) {
-        if (response.status === 403) {
-          toast.error("Error creating chat: " + resJson.error);
-        } else {
-          toast.error("Error creating chat");
-        }
+        toast.error(
+          response.status === 403
+            ? "Error creating chat: " + resJson.error
+            : "Error creating chat",
+        );
         return;
       }
       return resJson;
@@ -64,16 +66,16 @@ export function Uploader() {
   });
 
   function renderContent() {
-    if (fileState.uploading) {
+    if (fileState.uploading && fileState.file) {
       return (
         <RenderUploadingState
-          file={fileState.file as File}
+          file={fileState.file}
           progress={fileState.progress}
         />
       );
     }
     if (fileState.error) {
-      return <RenderErrorState />;
+      return <RenderErrorState message={fileState.errorMessage} />;
     }
     if (fileState.objectUrl) {
       return <RenderUploadedState />;
@@ -107,6 +109,7 @@ export function Uploader() {
           uploading: false,
           progress: 0,
           error: true,
+          errorMessage: "We couldn't prepare that upload. Try again.",
         }));
         return;
       }
@@ -138,7 +141,7 @@ export function Uploader() {
               { file_key: key, file_name: file.name },
               {
                 onSuccess: (data) => {
-                  router.push(`/chat/${data.chat_id}`);
+                  if (data?.chat_id) router.push(`/chat/${data.chat_id}`);
                 },
                 onError: (e) => {
                   console.log(e);
@@ -166,6 +169,7 @@ export function Uploader() {
         progress: 0,
         uploading: false,
         error: true,
+        errorMessage: "The upload failed. Please retry with the same PDF.",
       }));
     }
   }
@@ -177,13 +181,33 @@ export function Uploader() {
       }
     };
   }, [fileState.objectUrl]);
+
+  function rejectFile(rejections: FileRejection[]) {
+    const code = rejections[0]?.errors[0]?.code;
+    const errorMessage =
+      code === "file-too-large"
+        ? "That PDF is over 10MB. Choose a smaller file."
+        : "Only PDF files can be uploaded here.";
+
+    setFileState({
+      file: null,
+      uploading: false,
+      progress: 0,
+      error: true,
+      errorMessage,
+      id: uuidv4(),
+    });
+  }
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
     multiple: false,
     maxSize: 10 * 1024 * 1024,
+    onDropRejected: rejectFile,
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
+      if (!file) return;
 
       setFileState({
         file: file,
@@ -197,17 +221,19 @@ export function Uploader() {
       uploadFile(file);
     },
   });
+
   return (
     <Card
       {...getRootProps()}
       className={cn(
-        "relative cursor-pointer border-2 border-dashed transition-colors duration-200 ease-in-out w-full h-64",
+        "group relative h-[30rem] w-full cursor-pointer overflow-hidden rounded-[2rem] border-2 border-dashed bg-slate-950/70 shadow-2xl shadow-black/20 transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300",
         isDragActive
-          ? "border-primary bg-primary/10 border-solid"
-          : "border-border",
+          ? "scale-[1.01] border-emerald-300 bg-emerald-300/10"
+          : "border-white/15 hover:border-emerald-300/50 hover:bg-slate-950/90",
       )}
     >
-      <CardContent className="flex cursor-pointer items-center justify-center w-full h-full p-4 ">
+      <div className="pointer-events-none absolute inset-x-12 top-0 h-24 bg-emerald-400/10 blur-3xl transition group-hover:bg-emerald-400/20" />
+      <CardContent className="relative flex h-full w-full cursor-pointer items-center justify-center p-6 md:p-8">
         <input {...getInputProps()} />
         {renderContent()}
       </CardContent>

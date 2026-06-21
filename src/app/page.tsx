@@ -8,7 +8,6 @@ import { eq } from "drizzle-orm";
 import {
   ArrowRight,
   CheckCircle2,
-  ChevronDown,
   FileText,
   MessageSquareText,
   Search,
@@ -18,13 +17,6 @@ import {
 import Link from "next/link";
 
 const ctaLabel = "Start analyzing free";
-
-const megaMenu = [
-  ["For research", "Find answers across dense papers in seconds."],
-  ["For teams", "Share cited decisions without another meeting."],
-  ["For students", "Turn chapters into clear study notes."],
-  ["Security", "Your documents stay private by design."],
-];
 
 const benefits = [
   {
@@ -74,26 +66,6 @@ export default async function Home() {
           </span>
           ChatPDF
         </Link>
-
-        <div className="group relative hidden md:block">
-          <button className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[.04] px-4 py-2 text-sm text-slate-300 transition hover:bg-white/[.08] hover:text-white">
-            Solutions <ChevronDown className="size-4" />
-          </button>
-          <div className="invisible absolute left-1/2 top-12 w-[560px] -translate-x-1/2 translate-y-2 rounded-3xl border border-white/10 bg-slate-950/90 p-3 opacity-0 shadow-2xl shadow-black/40 backdrop-blur-2xl transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-            <div className="grid grid-cols-2 gap-2">
-              {megaMenu.map(([title, text]) => (
-                <Link
-                  href="/sign-in"
-                  key={title}
-                  className="rounded-2xl p-4 transition hover:bg-white/[.06]"
-                >
-                  <p className="font-medium text-white">{title}</p>
-                  <p className="mt-1 text-sm text-slate-400">{text}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
 
         <div className="flex items-center gap-3">
           {isAuth && <SubscriptionButton isPro={isPro} />}
@@ -216,6 +188,18 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <footer className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <p>© 2026 tanmayep.dev. All rights reserved.</p>
+        <div className="flex gap-4">
+          <Link href="/terms" className="transition hover:text-white">
+            Terms of Service
+          </Link>
+          <Link href="/privacy" className="transition hover:text-white">
+            Privacy
+          </Link>
+        </div>
+      </footer>
     </main>
   );
 }
