@@ -1,17 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Uploader } from "@/components/file-uploader/Uploader";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { checkSubscription } from "@/lib/subscriptions";
 import { auth } from "@clerk/nextjs/server";
-import { count, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import {
   ArrowRight,
   CheckCircle2,
   ChevronDown,
   FileText,
-  Lock,
   MessageSquareText,
   Search,
   Sparkles,
@@ -52,7 +50,6 @@ export default async function Home() {
   const { userId } = await auth();
   const isAuth = !!userId;
   let isPro = false;
-  let isUploadAllowed = true;
   let firstChat: { id: string } | undefined;
 
   if (userId) {
@@ -63,15 +60,6 @@ export default async function Home() {
 
     isPro = subscription;
     firstChat = userChats[0];
-
-    if (!isPro && firstChat) {
-      const [{ count: chatCount }] = await db
-        .select({ count: count() })
-        .from(chats)
-        .where(eq(chats.userId, userId))
-        .execute();
-      isUploadAllowed = chatCount < 1;
-    }
   }
 
   return (
@@ -113,10 +101,8 @@ export default async function Home() {
             asChild
             className="rounded-full bg-emerald-400 px-5 text-slate-950 hover:bg-emerald-300"
           >
-            <Link
-              href={isAuth && firstChat ? `/chat/${firstChat.id}` : "/sign-in"}
-            >
-              {isAuth && firstChat ? "Open workspace" : ctaLabel}
+            <Link href={isAuth ? "/upload" : "/sign-in?redirect_url=/upload"}>
+              {ctaLabel}
             </Link>
           </Button>
         </div>
@@ -141,7 +127,9 @@ export default async function Home() {
                 size="lg"
                 className="rounded-full bg-emerald-400 px-7 text-base text-slate-950 hover:bg-emerald-300"
               >
-                <Link href={isAuth ? "#upload" : "/sign-in"}>
+                <Link
+                  href={isAuth ? "/upload" : "/sign-in?redirect_url=/upload"}
+                >
                   {ctaLabel} <ArrowRight className="size-5" />
                 </Link>
               </Button>
@@ -205,31 +193,25 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <div
-            id="upload"
-            className="rounded-[2.5rem] border border-emerald-300/20 bg-emerald-300/10 p-6 backdrop-blur-xl"
-          >
+          <div className="group rounded-[2.5rem] border border-emerald-300/20 bg-emerald-300/10 p-6 backdrop-blur-xl transition hover:bg-emerald-300/15">
             <h2 className="text-3xl font-semibold tracking-tight">
               Drop in a PDF. Leave with answers.
             </h2>
-            <div className="mt-6 rounded-[2rem] border border-dashed border-white/20 bg-slate-950/60 p-4">
-              {isAuth ? (
-                isUploadAllowed ? (
-                  <Uploader />
-                ) : (
-                  <div className="flex items-center gap-3 rounded-2xl bg-red-500/15 p-4 text-sm text-red-100">
-                    <Lock className="size-5" /> PDF limit reached. Upgrade to
-                    continue.
-                  </div>
-                )
-              ) : (
-                <Button
-                  asChild
-                  className="w-full rounded-full bg-emerald-400 text-slate-950 hover:bg-emerald-300"
+            <p className="mt-4 text-slate-300">
+              Upload happens in a focused workspace, so this page can sell the
+              outcome and the app can do the work.
+            </p>
+            <div className="mt-8 rounded-[2rem] border border-dashed border-white/20 bg-slate-950/60 p-4">
+              <Button
+                asChild
+                className="w-full rounded-full bg-emerald-400 text-slate-950 hover:bg-emerald-300"
+              >
+                <Link
+                  href={isAuth ? "/upload" : "/sign-in?redirect_url=/upload"}
                 >
-                  <Link href="/sign-in">{ctaLabel}</Link>
-                </Button>
-              )}
+                  {ctaLabel}
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
