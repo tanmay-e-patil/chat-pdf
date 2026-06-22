@@ -10,6 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <script
           src="https://rybbit.tanmayep.dev/api/script.js"
           data-site-id="3"
