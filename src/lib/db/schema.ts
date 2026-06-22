@@ -8,6 +8,11 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
+export const ingestionStatusEnum = pgEnum("ingestion_status_enum", [
+  "processing",
+  "ready",
+  "failed",
+]);
 
 export const chats = pgTable("chats", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -16,6 +21,10 @@ export const chats = pgTable("chats", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   userId: varchar("user_id", { length: 256 }).notNull(),
   fileKey: text("file_key").notNull(),
+  ingestionStatus: ingestionStatusEnum("ingestion_status")
+    .notNull()
+    .default("processing"),
+  ingestionError: text("ingestion_error"),
 });
 
 export type DrizzleChat = typeof chats.$inferSelect;

@@ -42,7 +42,11 @@ const ChatPage = async (props: Props) => {
           <PDFViewer file_key={currentChat.fileKey} />
         </div>
         <div className="flex-[3] border-l-slate-200 h-screen flex flex-col">
-          <ChatComponent chatId={chatId} userId={userId} />
+          <ChatComponent
+            chatId={chatId}
+            userId={userId}
+            ingestionStatus={currentChat.ingestionStatus}
+          />
         </div>
       </div>
     </div>

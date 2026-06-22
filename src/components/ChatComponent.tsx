@@ -12,9 +12,10 @@ import { useQuery } from "@tanstack/react-query";
 type Props = {
   chatId: string;
   userId: string;
+  ingestionStatus: "processing" | "ready" | "failed";
 };
 
-const ChatComponent = ({ chatId, userId }: Props) => {
+const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
   const [input, setInput] = useState("");
   const { data, isPending } = useQuery({
     queryKey: ["chat", chatId],
@@ -24,6 +25,21 @@ const ChatComponent = ({ chatId, userId }: Props) => {
       return json.map(toUIMessage);
     },
   });
+
+  const { data: chat } = useQuery({
+    queryKey: ["chat-status", chatId],
+    queryFn: async () => {
+      const response = await fetch(`/api/chat/${chatId}`);
+      if (!response.ok) throw new Error("Failed to load chat status");
+      return (await response.json()) as {
+        ingestionStatus: Props["ingestionStatus"];
+      };
+    },
+    initialData: { ingestionStatus },
+    refetchInterval: (query) =>
+      query.state.data?.ingestionStatus === "ready" ? false : 2000,
+  });
+  const currentStatus = chat.ingestionStatus;
 
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
@@ -39,7 +55,7 @@ const ChatComponent = ({ chatId, userId }: Props) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const text = input.trim();
-    if (!text) return;
+    if (!text || currentStatus !== "ready") return;
     sendMessage({ parts: [{ type: "text", text }] });
     setInput("");
   };
@@ -54,6 +70,13 @@ const ChatComponent = ({ chatId, userId }: Props) => {
     <div className="relative h-screen flex flex-col bg-gray-900">
       <div className="sticky top-0 inset-x-0 p-2 bg-gray-800 h-fit ">
         <h3 className="text-xl font-bold text-white">Chat</h3>
+        {currentStatus !== "ready" && (
+          <p className="text-sm text-gray-300">
+            {currentStatus === "processing"
+              ? "Processing PDF..."
+              : "PDF processing failed."}
+          </p>
+        )}
       </div>
       <div
         className="flex-1 overflow-y-auto scrollbar-hidden px-2"
@@ -69,10 +92,15 @@ const ChatComponent = ({ chatId, userId }: Props) => {
           <Input
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            placeholder="Ask any question..."
+            placeholder={
+              currentStatus === "ready"
+                ? "Ask any question..."
+                : "PDF not ready yet"
+            }
             className="w-full text-white"
+            disabled={currentStatus !== "ready"}
           />
-          <Button variant="secondary">
+          <Button variant="secondary" disabled={currentStatus !== "ready"}>
             <Send className="h-4 w-4" />
           </Button>
         </div>
@@ -83,7 +111,11 @@ const ChatComponent = ({ chatId, userId }: Props) => {
 
 export default ChatComponent;
 
-function toUIMessage(message: { id: string; role: "user" | "assistant"; content: string }): UIMessage {
+function toUIMessage(message: {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}): UIMessage {
   return {
     id: message.id,
     role: message.role,

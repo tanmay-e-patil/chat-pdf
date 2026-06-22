@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { loadS3IntoPinecone } from "@/lib/pinecone";
+import { triggerIngestion } from "@/lib/ingestion";
 import { getS3Url } from "@/lib/s3";
 import { checkSubscription } from "@/lib/subscriptions";
 import { auth } from "@clerk/nextjs/server";
@@ -36,7 +36,6 @@ export async function POST(req: Request) {
     const { file_key, file_name }: { file_key: string; file_name: string } =
       body;
 
-    await loadS3IntoPinecone(file_key);
     const chatId = await db
       .insert(chats)
       .values({
@@ -44,10 +43,29 @@ export async function POST(req: Request) {
         pdfName: file_name,
         pdfUrl: getS3Url(file_key),
         userId: userId,
+        ingestionStatus: "processing",
       })
       .returning({
         insertedId: chats.id,
       });
+
+    try {
+      await triggerIngestion({
+        chatId: chatId[0].insertedId,
+        fileKey: file_key,
+      });
+    } catch (error) {
+      await db
+        .update(chats)
+        .set({
+          ingestionStatus: "failed",
+          ingestionError:
+            error instanceof Error ? error.message : String(error),
+        })
+        .where(eq(chats.id, chatId[0].insertedId));
+      throw error;
+    }
+
     return NextResponse.json(
       { chat_id: chatId[0].insertedId },
       { status: 200 },

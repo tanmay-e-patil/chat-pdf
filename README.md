@@ -7,9 +7,32 @@ This project is a web application that allows users to interact with PDF documen
 - User authentication and authorization
 - Upload and manage PDF documents
 - Chat interface for querying PDF content
-- Integration with OpenAI for AI-powered responses
+- AI-powered responses with Amazon Bedrock
 - Secure file storage using S3-compatible services
 - Payment processing with Stripe
+
+## Architecture
+
+```mermaid
+flowchart LR
+  User[User browser] --> Next[Next.js app / API routes]
+  Next --> Clerk[Clerk auth]
+  Next --> DB[(Neon Postgres)]
+  Next --> Stripe[Stripe checkout + webhooks]
+
+  User -->|presigned upload| S3[(AWS S3 PDF bucket)]
+  Next -->|create chat + invoke| Lambda[AWS Lambda ingestion]
+  Lambda -->|read PDF| S3
+  Lambda -->|embed chunks| BedrockEmbed[Amazon Bedrock embeddings]
+  Lambda -->|store vectors| Pinecone[(Pinecone)]
+  Lambda -->|mark ready/failed| DB
+
+  User -->|chat message| Next
+  Next -->|retrieve context| Pinecone
+  Next -->|generate answer| BedrockChat[Amazon Bedrock chat model]
+  Next -->|save messages| DB
+  Next -->|stream answer| User
+```
 
 ## Technologies Used
 
@@ -17,9 +40,9 @@ This project is a web application that allows users to interact with PDF documen
 - Clerk (Authentication)
 - AWS S3
 - Pinecone (Vector database)
-- OpenAI API
+- Amazon Bedrock
 - Stripe (Payments)
-- NeonDB 
+- NeonDB
 
 ## Setup Instructions
 
@@ -28,7 +51,6 @@ This project is a web application that allows users to interact with PDF documen
 3. Configure the required environment variables as shown above.
 4. Run the development server with `pnpm dev`.
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
 
 ## Environment Variables
 
@@ -52,7 +74,9 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 PINECONE_ENVIRONMENT=
 PINECONE_API_KEY=
-OPENAI_API_KEY=
+BEDROCK_EMBEDDING_MODEL_ID=amazon.titan-embed-text-v1
+BEDROCK_CHAT_MODEL_ID=us.amazon.nova-lite-v1:0
+AWS_INGESTION_LAMBDA_NAME=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 SENTRY_AUTH_TOKEN=

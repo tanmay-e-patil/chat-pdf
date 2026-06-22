@@ -1,12 +1,19 @@
 import { getPineconeClient } from "./pinecone";
 import { convertToAscii } from "./utils";
 import { getEmbeddings } from "./embeddings";
+import { env } from "./env/server";
 
 export async function getContext(query: string, fileKey: string) {
   const queryEmbeddings = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
+  console.log("Pinecone matches", {
+    index: env.PINECONE_INDEX_NAME,
+    fileKey,
+    count: matches?.length ?? 0,
+    scores: matches?.map((match) => match.score),
+  });
   const qualifyDocs = matches?.filter(
-    (match) => match.score && match.score > 0.7,
+    (match) => match.score && match.score > 0,
   );
   type Metadata = {
     pageNumber: number;
@@ -22,7 +29,7 @@ export async function getMatchesFromEmbeddings(
   fileKey: string,
 ) {
   const pinecone = getPineconeClient();
-  const pineconeIndex = await pinecone.Index("chat-pdf");
+  const pineconeIndex = await pinecone.Index(env.PINECONE_INDEX_NAME);
   try {
     const namespace = convertToAscii(fileKey);
     const queryResult = await pineconeIndex.namespace(namespace).query({

@@ -32,7 +32,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
         }
         return;
       }
-      // Refresh the page on success
+      if (id === chatId) router.push("/");
       router.refresh();
       return resJson;
     },
@@ -58,10 +58,14 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               <MessageCircle className="mr-2"></MessageCircle>
               <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
                 {chat.pdfName}
+                {chat.ingestionStatus !== "ready" &&
+                  ` (${chat.ingestionStatus})`}
               </p>
               <Button
                 className="px-2 bg-red-500"
-                onClick={() => {
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
                   mutate({ id: chat.id });
                 }}
               >
