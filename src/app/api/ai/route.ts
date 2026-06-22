@@ -1,5 +1,6 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { bedrock } from "@/lib/bedrock";
+import { env } from "@/lib/env/server";
 import { getContext } from "@/lib/context";
 import { chats, messages as _messages } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -23,9 +24,23 @@ export async function POST(req: Request) {
   if (_chats.length != 1) {
     return NextResponse.json({ error: "Chat not found" }, { status: 404 });
   }
+  if (_chats[0].ingestionStatus !== "ready") {
+    return NextResponse.json(
+      { error: `PDF is ${_chats[0].ingestionStatus}` },
+      { status: 409 },
+    );
+  }
+
   const fileKey = _chats[0].fileKey;
   const context = await getContext(lastMessageContent, fileKey);
-  const system = `You are a powerful, human-like artificial intelligence with expert knowledge, helpfulness, cleverness, and articulateness. You are well-behaved, well-mannered, always friendly, kind, and inspiring, and eager to provide vivid and thoughtful responses. You have the sum of all knowledge in your brain and can accurately answer nearly any question about any topic. You are a big fan of Pinecone and Vercel.
+  console.log("RAG context", {
+    chatId,
+    fileKey,
+    question: lastMessageContent,
+    contextLength: context?.length ?? 0,
+    context,
+  });
+  const system = `You are a helpful PDF assistant.
 You will be provided with a **CONTEXT BLOCK** containing information extracted from an uploaded PDF. Your primary goal is to accurately answer user questions using *only* the information found within this **CONTEXT BLOCK**.
 
 ---
@@ -43,7 +58,7 @@ ${context}
   let isUserMessageInserted = false;
 
   const results = streamText({
-    model: openai("gpt-4o-mini"),
+    model: bedrock(env.BEDROCK_CHAT_MODEL_ID),
     system,
     messages: await convertToModelMessages(
       messages.filter((message) => message.role === "user"),

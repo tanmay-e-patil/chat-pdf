@@ -40,9 +40,9 @@ flowchart LR
 - Clerk (Authentication)
 - AWS S3
 - Pinecone (Vector database)
-- OpenAI API
+- Amazon Bedrock
 - Stripe (Payments)
-- NeonDB 
+- NeonDB
 
 ## Setup Instructions
 
@@ -51,7 +51,6 @@ flowchart LR
 3. Configure the required environment variables as shown above.
 4. Run the development server with `pnpm dev`.
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
 
 ## Environment Variables
 
@@ -75,7 +74,9 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 PINECONE_ENVIRONMENT=
 PINECONE_API_KEY=
-OPENAI_API_KEY=
+BEDROCK_EMBEDDING_MODEL_ID=amazon.titan-embed-text-v1
+BEDROCK_CHAT_MODEL_ID=us.amazon.nova-lite-v1:0
+AWS_INGESTION_LAMBDA_NAME=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 SENTRY_AUTH_TOKEN=

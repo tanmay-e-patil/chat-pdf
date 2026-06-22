@@ -20,7 +20,7 @@ export async function GET() {
       .where(eq(subscriptions.userId, userId))
       .execute();
 
-    const returnUrl = `${env.NEXT_BASE_URL}/`;
+    const returnUrl = `${env.NEXT_BASE_URL!}/`;
     if (_userSubscriptions[0] && _userSubscriptions[0].stripeCustomerId) {
       const stripeSession = await stripe.billingPortal.sessions.create({
         customer: _userSubscriptions[0].stripeCustomerId,

@@ -2,14 +2,14 @@ import "server-only";
 import * as fs from "fs";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { S3 } from "./s3/S3Client";
-import { envClient } from "./env/client";
+import { env } from "./env/server";
 
 export async function downloadFromS3(file_key: string) {
   console.log(file_key);
   try {
     const obj = await S3.send(
       new GetObjectCommand({
-        Bucket: envClient.NEXT_PUBLIC_S3_BUCKET_NAME,
+        Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME,
         Key: file_key,
       }),
     );
