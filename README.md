@@ -7,9 +7,32 @@ This project is a web application that allows users to interact with PDF documen
 - User authentication and authorization
 - Upload and manage PDF documents
 - Chat interface for querying PDF content
-- Integration with OpenAI for AI-powered responses
+- AI-powered responses with Amazon Bedrock
 - Secure file storage using S3-compatible services
 - Payment processing with Stripe
+
+## Architecture
+
+```mermaid
+flowchart LR
+  User[User browser] --> Next[Next.js app / API routes]
+  Next --> Clerk[Clerk auth]
+  Next --> DB[(Neon Postgres)]
+  Next --> Stripe[Stripe checkout + webhooks]
+
+  User -->|presigned upload| S3[(AWS S3 PDF bucket)]
+  Next -->|create chat + invoke| Lambda[AWS Lambda ingestion]
+  Lambda -->|read PDF| S3
+  Lambda -->|embed chunks| BedrockEmbed[Amazon Bedrock embeddings]
+  Lambda -->|store vectors| Pinecone[(Pinecone)]
+  Lambda -->|mark ready/failed| DB
+
+  User -->|chat message| Next
+  Next -->|retrieve context| Pinecone
+  Next -->|generate answer| BedrockChat[Amazon Bedrock chat model]
+  Next -->|save messages| DB
+  Next -->|stream answer| User
+```
 
 ## Technologies Used
 
