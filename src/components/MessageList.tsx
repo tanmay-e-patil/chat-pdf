@@ -2,6 +2,7 @@ import React from "react";
 import { type UIMessage } from "ai";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
   messages: UIMessage[];
@@ -11,13 +12,13 @@ type Props = {
 const MessageList = ({ messages, isLoading }: Props) => {
   if (isLoading)
     return (
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Loader2 className="h-10 w-10" />
+      <div className="grid h-full place-items-center text-emerald-300">
+        <Loader2 className="h-10 w-10 animate-spin" />
       </div>
     );
   if (!messages) return <></>;
   return (
-    <div className="flex flex-col gap-2 px-4 h-full">
+    <div className="flex h-full flex-col gap-3 px-3">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -28,14 +29,38 @@ const MessageList = ({ messages, isLoading }: Props) => {
         >
           <div
             className={cn(
-              "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",
+              "rounded-3xl px-4 py-3 text-sm leading-6 shadow-md",
               {
-                "bg-blue-600 text-white": message.role === "user",
-                "bg-gray-600 text-white": message.role === "assistant",
+                "bg-emerald-400 font-medium text-slate-950":
+                  message.role === "user",
+                "border border-white/10 bg-slate-900 text-slate-200":
+                  message.role === "assistant",
               },
             )}
           >
-            <p>{getMessageText(message)}</p>
+            <ReactMarkdown
+              components={{
+                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                ul: ({ children }) => (
+                  <ul className="mb-2 list-disc pl-5 last:mb-0">{children}</ul>
+                ),
+                ol: ({ children }) => (
+                  <ol className="mb-2 list-decimal pl-5 last:mb-0">{children}</ol>
+                ),
+                code: ({ children }) => (
+                  <code className="rounded bg-black/20 px-1 py-0.5 font-mono text-xs">
+                    {children}
+                  </code>
+                ),
+                pre: ({ children }) => (
+                  <pre className="mb-2 overflow-x-auto rounded-2xl bg-black/30 p-3 text-xs last:mb-0">
+                    {children}
+                  </pre>
+                ),
+              }}
+            >
+              {getMessageText(message)}
+            </ReactMarkdown>
           </div>
         </div>
       ))}

@@ -1,12 +1,9 @@
-import ChatComponent from "@/components/ChatComponent";
-import ChatSideBar from "@/components/ChatSideBar";
-import PDFViewer from "@/components/PDFViewer";
+import ChatWorkspace from "@/components/ChatWorkspace";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import React from "react";
 
 type Props = {
   params: Promise<{ chatId: string }>;
@@ -33,23 +30,15 @@ const ChatPage = async (props: Props) => {
   }
 
   return (
-    <div className="flex overflow-scroll scrollbar-hidden">
-      <div className="flex w-full  overflow-scroll scrollbar-hidden">
-        <div className="flex-[1] max-w-xs">
-          <ChatSideBar chats={_chats} chatId={chatId} />
-        </div>
-        <div className=" overflow-scroll scrollbar-hidden flex-[5]">
-          <PDFViewer file_key={currentChat.fileKey} />
-        </div>
-        <div className="flex-[3] border-l-slate-200 h-screen flex flex-col">
-          <ChatComponent
-            chatId={chatId}
-            userId={userId}
-            ingestionStatus={currentChat.ingestionStatus}
-          />
-        </div>
-      </div>
-    </div>
+    <main className="h-screen overflow-hidden bg-[#070A12] p-3 text-white">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(74,222,128,.18),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(96,165,250,.14),transparent_30%)]" />
+      <ChatWorkspace
+        chats={_chats}
+        chatId={chatId}
+        userId={userId}
+        currentChat={currentChat}
+      />
+    </main>
   );
 };
 
