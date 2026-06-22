@@ -43,7 +43,7 @@ variable "bedrock_embedding_model_id" {
 
 variable "bedrock_chat_model_id" {
   type    = string
-  default = "amazon.nova-micro-v1:0"
+  default = "us.amazon.nova-micro-v1:0"
 }
 
 variable "lambda_timeout_seconds" {

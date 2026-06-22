@@ -61,9 +61,7 @@ ${context}
   const results = streamText({
     model: bedrock(env.BEDROCK_CHAT_MODEL_ID),
     system,
-    messages: await convertToModelMessages(
-      messages.filter((message) => message.role === "user"),
-    ),
+    messages: await convertToModelMessages([lastMessage]),
     onChunk: async () => {
       if (!isUserMessageInserted) {
         await db.insert(_messages).values({

@@ -28,7 +28,7 @@ export default function ChatWorkspace({
       className={
         sidebarOpen
           ? "relative grid h-full gap-3 lg:grid-cols-[18rem_minmax(0,1fr)_26rem]"
-          : "relative grid h-full gap-3 lg:grid-cols-[minmax(0,.75fr)_minmax(30rem,1.25fr)]"
+          : "relative grid h-full gap-3 lg:grid-cols-[minmax(0,1fr)_26rem]"
       }
     >
       {sidebarOpen ? (
@@ -48,7 +48,7 @@ export default function ChatWorkspace({
           <PanelLeftOpen className="size-4" />
         </Button>
       )}
-      <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 shadow-2xl shadow-black/40">
+      <section className="w-full justify-self-center overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl shadow-black/40">
         <PDFViewer file_key={currentChat.fileKey} />
       </section>
       <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.04] shadow-2xl shadow-black/40 backdrop-blur-xl">
