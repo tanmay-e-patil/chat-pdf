@@ -102,7 +102,7 @@ resource "aws_lambda_function" "ingestion" {
   function_name    = "${var.name_prefix}-ingestion"
   role             = aws_iam_role.ingestion_lambda.arn
   handler          = "index.handler"
-  runtime          = "nodejs20.x"
+  runtime          = "nodejs22.x"
   filename         = data.archive_file.ingestion_lambda.output_path
   source_code_hash = data.archive_file.ingestion_lambda.output_base64sha256
   timeout          = var.lambda_timeout_seconds
