@@ -21,7 +21,12 @@ const SubscriptionButton = ({ isPro }: Props) => {
     }
   };
   return (
-    <Button disabled={loading} onClick={handleSubscription} variant="secondary">
+    <Button
+      disabled={loading}
+      onClick={handleSubscription}
+      variant="secondary"
+      className="rounded-full"
+    >
       {isPro ? "Manage Subscriptions" : "Subscribe"}
     </Button>
   );

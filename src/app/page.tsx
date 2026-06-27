@@ -189,6 +189,77 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-20">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-sm font-medium text-emerald-300">Pricing</p>
+          <h2 className="mt-3 text-4xl font-semibold tracking-[-0.04em] md:text-5xl">
+            Start free. Go Pro when one PDF is not enough.
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          <div className="rounded-[2.5rem] border border-white/10 bg-white/[.04] p-6">
+            <h3 className="text-2xl font-semibold">Free</h3>
+            <p className="mt-3 text-5xl font-semibold">$0</p>
+            <p className="mt-2 text-slate-400">Try ChatPDF with one document.</p>
+            <ul className="mt-8 space-y-3 text-slate-300">
+              {[
+                "1 PDF chat",
+                "Cited AI answers",
+                "Secure PDF upload",
+              ].map((feature) => (
+                <li key={feature} className="flex items-center gap-3">
+                  <CheckCircle2 className="size-5 text-emerald-300" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <Button
+              asChild
+              className="mt-8 w-full rounded-full bg-white text-slate-950 hover:bg-slate-200"
+            >
+              <Link href={isAuth ? "/upload" : "/sign-in?redirect_url=/upload"}>
+                Start free
+              </Link>
+            </Button>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-emerald-300/30 bg-emerald-300/10 p-6 shadow-2xl shadow-emerald-950/30">
+            <div className="absolute right-6 top-6 rounded-full bg-emerald-400 px-3 py-1 text-sm font-medium text-slate-950">
+              Pro
+            </div>
+            <h3 className="text-2xl font-semibold">ChatPDF Pro</h3>
+            <p className="mt-3 text-5xl font-semibold">
+              $20<span className="text-lg text-slate-300">/month</span>
+            </p>
+            <p className="mt-2 text-slate-300">Unlimited PDF sessions.</p>
+            <ul className="mt-8 space-y-3 text-slate-200">
+              {[
+                "Unlimited PDF chats",
+                "Cited AI answers",
+                "Manage billing anytime",
+              ].map((feature) => (
+                <li key={feature} className="flex items-center gap-3">
+                  <CheckCircle2 className="size-5 text-emerald-300" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              {isAuth ? (
+                <SubscriptionButton isPro={isPro} />
+              ) : (
+                <Button
+                  asChild
+                  className="w-full rounded-full bg-emerald-400 text-slate-950 hover:bg-emerald-300"
+                >
+                  <Link href="/sign-in?redirect_url=/upload">Upgrade to Pro</Link>
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 tanmayep.dev. All rights reserved.</p>
         <div className="flex gap-4">
