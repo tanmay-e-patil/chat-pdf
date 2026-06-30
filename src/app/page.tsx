@@ -9,6 +9,7 @@ import {
   ArrowRight,
   CheckCircle2,
   FileText,
+  Github,
   MessageSquareText,
   Search,
   Sparkles,
@@ -69,6 +70,21 @@ export default async function Home() {
 
         <div className="flex items-center gap-3">
           {isAuth && <SubscriptionButton isPro={isPro} />}
+          <Button
+            asChild
+            size="icon"
+            variant="outline"
+            className="rounded-full border-white/15 bg-white/[.03] text-white hover:bg-white/10 hover:text-white"
+          >
+            <Link
+              href="https://github.com/tanmay-e-patil/chat-pdf"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View ChatPDF on GitHub"
+            >
+              <Github className="size-5" />
+            </Link>
+          </Button>
           <Button
             asChild
             className="rounded-full bg-emerald-400 px-5 text-slate-950 hover:bg-emerald-300"
