@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ai-sdk/amazon-bedrock':
-        specifier: ^4.0.119
-        version: 4.0.119(zod@3.25.76)
+        specifier: ^4.0.120
+        version: 4.0.120(zod@3.25.76)
       '@ai-sdk/provider':
         specifier: ^1.0.7
         version: 1.1.3
@@ -34,7 +34,7 @@ importers:
         version: 6.39.5(next@15.5.19(@opentelemetry/api@1.9.1)(@playwright/test@1.60.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.1.49
         version: 1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0)
@@ -168,8 +168,8 @@ importers:
 
 packages:
 
-  '@ai-sdk/amazon-bedrock@4.0.119':
-    resolution: {integrity: sha512-DgJugGl0Euja2g+60p3eV+2k4kQvtLtJFeYskVrAlt0KgpVGYot0XEPCOBgjDsn6aAEuyibWDSIddxJU8k9wug==}
+  '@ai-sdk/amazon-bedrock@4.0.120':
+    resolution: {integrity: sha512-eRbkUIylAGkItMh4Q0iokRwHVypPLd7RiGHh1jcqgf0PjI04wTitJOCwDSVe2TI9NnFVqpaBOQMe5bNF7lYw6w==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -186,8 +186,8 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/openai@3.0.73':
-    resolution: {integrity: sha512-+3x9oxHv9Xp33Iv2L8D+e5hqmZi64jofBKig/9611JKyfV59NdkaDDajtwc0CxOEfARgCVq1BW7dP+526gKOKw==}
+  '@ai-sdk/openai@3.0.74':
+    resolution: {integrity: sha512-LPDBWd2WCv0GQs29K2pHcNrGx24hm4D8QEP386HwUAUPr1URho6bNVXHNmIv0FxaW+xDkLpNMTen+mFCUBp2LA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -415,8 +415,8 @@ packages:
   '@borewit/text-codec@0.2.2':
     resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
 
-  '@browserbasehq/sdk@2.14.0':
-    resolution: {integrity: sha512-DqVfjlgt74vPWfWiCp4VPtiMNJxg2yBZwio2uOfnpV1aJM0OWZR4AJrt/4df+xgQQ/guRpds5do41ycrDaYt3w==}
+  '@browserbasehq/sdk@2.14.1':
+    resolution: {integrity: sha512-Ahmzb5+82ePgSGwouKEoAhiGy8mJ3RbCl+uigfGfVc60zseYIftcMiDPXSmrTQr1NHaATRx4cJlynP8ZUweXtg==}
 
   '@browserbasehq/stagehand@1.14.0':
     resolution: {integrity: sha512-Hi/EzgMFWz+FKyepxHTrqfTPjpsuBS4zRy3e9sbMpBgLPv+9c0R+YZEvS7Bw4mTS66QtvvURRT6zgDGFotthVQ==}
@@ -3706,8 +3706,8 @@ packages:
     resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
     engines: {node: '>=4'}
 
-  pg-protocol@1.14.0:
-    resolution: {integrity: sha512-n5taZ1kO3s9ngDTVxsEznOqCyToTgz0FLuPq0B33COy5pPpuWJpY3/2oRBVETuOgzdqRXfWpM9HIhp2LBBT1BA==}
+  pg-protocol@1.15.0:
+    resolution: {integrity: sha512-cq9sECI5s0+uPUXjbz8ioyPJni6RzsRib0US67i5IoTZKw8fNeYlVE7u8F4dG7vEJJtc5wdD1K189lCCUwqWTQ==}
 
   pg-types@4.1.0:
     resolution: {integrity: sha512-o2XFanIMy/3+mThw69O8d4n1E5zsLhdO+OPqswezu7Z5ekP4hYDqlDjlmOpYMbzY2Br0ufCwJLdDIXeNVwcWFg==}
@@ -3959,6 +3959,11 @@ packages:
 
   semver@7.8.4:
     resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -4340,10 +4345,10 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/amazon-bedrock@4.0.119(zod@3.25.76)':
+  '@ai-sdk/amazon-bedrock@4.0.120(zod@3.25.76)':
     dependencies:
       '@ai-sdk/anthropic': 3.0.85(zod@3.25.76)
-      '@ai-sdk/openai': 3.0.73(zod@3.25.76)
+      '@ai-sdk/openai': 3.0.74(zod@3.25.76)
       '@ai-sdk/provider': 3.0.10
       '@ai-sdk/provider-utils': 4.0.30(zod@3.25.76)
       '@smithy/eventstream-codec': 4.4.1
@@ -4364,7 +4369,7 @@ snapshots:
       '@vercel/oidc': 3.2.0
       zod: 3.25.76
 
-  '@ai-sdk/openai@3.0.73(zod@3.25.76)':
+  '@ai-sdk/openai@3.0.74(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
       '@ai-sdk/provider-utils': 4.0.30(zod@3.25.76)
@@ -4470,7 +4475,7 @@ snapshots:
       '@aws-crypto/util': 5.2.0
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4547,7 +4552,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4555,7 +4560,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4563,7 +4568,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/fetch-http-handler': 5.4.6
       '@smithy/node-http-handler': 4.7.7
       '@smithy/types': 4.14.3
@@ -4573,7 +4578,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/fetch-http-handler': 5.4.6
       '@smithy/node-http-handler': 4.7.7
       '@smithy/types': 4.14.3
@@ -4590,7 +4595,7 @@ snapshots:
       '@aws-sdk/credential-provider-web-identity': 3.972.52
       '@aws-sdk/nested-clients': 3.997.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/credential-provider-imds': 4.3.8
       '@smithy/types': 4.14.3
       tslib: 2.8.1
@@ -4606,7 +4611,7 @@ snapshots:
       '@aws-sdk/credential-provider-web-identity': 3.972.54
       '@aws-sdk/nested-clients': 3.997.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/credential-provider-imds': 4.3.8
       '@smithy/types': 4.14.3
       tslib: 2.8.1
@@ -4616,8 +4621,8 @@ snapshots:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/nested-clients': 3.997.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
-      '@smithy/types': 4.14.3
+      '@smithy/core': 3.25.1
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-login@3.972.54':
@@ -4625,8 +4630,8 @@ snapshots:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/nested-clients': 3.997.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
-      '@smithy/types': 4.14.3
+      '@smithy/core': 3.25.1
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-node@3.972.55':
@@ -4661,7 +4666,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4669,7 +4674,7 @@ snapshots:
     dependencies:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4679,7 +4684,7 @@ snapshots:
       '@aws-sdk/nested-clients': 3.997.20
       '@aws-sdk/token-providers': 3.1066.0
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4689,7 +4694,7 @@ snapshots:
       '@aws-sdk/nested-clients': 3.997.22
       '@aws-sdk/token-providers': 3.1071.0
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4698,7 +4703,7 @@ snapshots:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/nested-clients': 3.997.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4707,7 +4712,7 @@ snapshots:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/nested-clients': 3.997.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -4756,10 +4761,10 @@ snapshots:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/signature-v4-multi-region': 3.996.34
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/fetch-http-handler': 5.4.6
       '@smithy/node-http-handler': 4.7.7
-      '@smithy/types': 4.14.3
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/nested-clients@3.997.22':
@@ -4769,7 +4774,7 @@ snapshots:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/signature-v4-multi-region': 3.996.35
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/fetch-http-handler': 5.4.6
       '@smithy/node-http-handler': 4.7.7
       '@smithy/types': 4.14.3
@@ -4795,7 +4800,7 @@ snapshots:
     dependencies:
       '@aws-sdk/types': 3.973.13
       '@smithy/signature-v4': 5.4.6
-      '@smithy/types': 4.14.3
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/token-providers@3.1066.0':
@@ -4803,8 +4808,8 @@ snapshots:
       '@aws-sdk/core': 3.974.20
       '@aws-sdk/nested-clients': 3.997.20
       '@aws-sdk/types': 3.973.12
-      '@smithy/core': 3.24.6
-      '@smithy/types': 4.14.3
+      '@smithy/core': 3.25.1
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/token-providers@3.1071.0':
@@ -4812,8 +4817,8 @@ snapshots:
       '@aws-sdk/core': 3.974.22
       '@aws-sdk/nested-clients': 3.997.22
       '@aws-sdk/types': 3.973.13
-      '@smithy/core': 3.24.6
-      '@smithy/types': 4.14.3
+      '@smithy/core': 3.25.1
+      '@smithy/types': 4.15.0
       tslib: 2.8.1
 
   '@aws-sdk/token-providers@3.1073.0':
@@ -4855,7 +4860,7 @@ snapshots:
 
   '@borewit/text-codec@0.2.2': {}
 
-  '@browserbasehq/sdk@2.14.0':
+  '@browserbasehq/sdk@2.14.1':
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -4870,7 +4875,7 @@ snapshots:
   '@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       '@anthropic-ai/sdk': 0.27.3
-      '@browserbasehq/sdk': 2.14.0
+      '@browserbasehq/sdk': 2.14.1
       '@playwright/test': 1.60.0
       deepmerge: 4.3.1
       dotenv: 16.6.1
@@ -5384,7 +5389,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)':
+  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76)
       '@ibm-cloud/watsonx-ai': 1.7.13
@@ -5405,7 +5410,7 @@ snapshots:
       '@aws-sdk/client-lambda': 3.1073.0
       '@aws-sdk/client-s3': 3.1066.0
       '@aws-sdk/credential-provider-node': 3.972.57
-      '@browserbasehq/sdk': 2.14.0
+      '@browserbasehq/sdk': 2.14.1
       '@neondatabase/serverless': 1.1.0
       '@pinecone-database/pinecone': 4.1.0
       '@smithy/eventstream-codec': 4.4.1
@@ -5633,7 +5638,7 @@ snapshots:
 
   '@smithy/credential-provider-imds@4.3.8':
     dependencies:
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -5660,7 +5665,7 @@ snapshots:
 
   '@smithy/signature-v4@5.4.6':
     dependencies:
-      '@smithy/core': 3.24.6
+      '@smithy/core': 3.25.1
       '@smithy/types': 4.14.3
       tslib: 2.8.1
 
@@ -5840,7 +5845,7 @@ snapshots:
   '@types/pg@8.11.6':
     dependencies:
       '@types/node': 20.19.43
-      pg-protocol: 1.14.0
+      pg-protocol: 1.15.0
       pg-types: 4.1.0
     optional: true
 
@@ -7251,7 +7256,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.8.4
+      semver: 7.8.5
 
   jsx-ast-utils@3.3.5:
     dependencies:
@@ -7837,7 +7842,7 @@ snapshots:
   pg-numeric@1.0.2:
     optional: true
 
-  pg-protocol@1.14.0:
+  pg-protocol@1.15.0:
     optional: true
 
   pg-types@4.1.0:
@@ -8057,6 +8062,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.8.4: {}
+
+  semver@7.8.5: {}
 
   server-only@0.0.1: {}
 
