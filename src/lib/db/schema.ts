@@ -8,8 +8,8 @@ import {
   index,
 } from "drizzle-orm/pg-core";
 
-export const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
-export const ingestionStatusEnum = pgEnum("ingestion_status_enum", [
+const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
+const ingestionStatusEnum = pgEnum("ingestion_status_enum", [
   "processing",
   "ready",
   "failed",
