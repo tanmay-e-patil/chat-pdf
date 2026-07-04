@@ -32,12 +32,7 @@ const ChatPage = async (props: Props) => {
   return (
     <main className="h-screen overflow-hidden bg-[#070A12] p-3 text-white">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(74,222,128,.18),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(96,165,250,.14),transparent_30%)]" />
-      <ChatWorkspace
-        chats={_chats}
-        chatId={chatId}
-        userId={userId}
-        currentChat={currentChat}
-      />
+      <ChatWorkspace chats={_chats} chatId={chatId} currentChat={currentChat} />
     </main>
   );
 };

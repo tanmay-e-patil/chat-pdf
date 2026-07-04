@@ -11,11 +11,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   chatId: string;
-  userId: string;
   ingestionStatus: "processing" | "ready" | "failed";
 };
 
-const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
+const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
   const [input, setInput] = useState("");
   const queryClient = useQueryClient();
   const { data, isPending } = useQuery({
@@ -45,7 +44,7 @@ const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/ai",
-      body: { chatId, userId },
+      body: { chatId },
     }),
   });
 
@@ -84,7 +83,9 @@ const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
     <div className="flex h-full flex-col">
       <div className="flex items-start justify-between gap-3 border-b border-white/10 p-5">
         <div>
-          <h3 className="text-xl font-semibold tracking-tight text-white">Chat</h3>
+          <h3 className="text-xl font-semibold tracking-tight text-white">
+            Chat
+          </h3>
           {currentStatus !== "ready" && (
             <p className="mt-1 text-sm text-slate-300">
               {currentStatus === "processing"

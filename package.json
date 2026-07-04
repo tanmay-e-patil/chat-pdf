@@ -8,7 +8,8 @@
     "build": "next build",
     "build:ingestion-lambda": "esbuild src/lib/ingestion-lambda.ts --bundle --platform=node --target=node22 --format=cjs --alias:server-only=./src/lib/lambda-server-only.ts --outfile=dist/ingestion-lambda/index.cjs",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
   "dependencies": {

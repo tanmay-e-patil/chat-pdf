@@ -2,43 +2,44 @@ import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { bedrock } from "@/lib/bedrock";
 import { env } from "@/lib/env/server";
 import { getContext } from "@/lib/context";
-import { chats, messages as _messages } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { messages as _messages } from "@/lib/db/schema";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { getAuthenticatedUserId, getOwnedChat } from "@/lib/authz";
 
 export async function POST(req: Request) {
-  const { messages, chatId, userId } = (await req.json()) as {
+  const userId = await getAuthenticatedUserId();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { messages, chatId } = (await req.json()) as {
     messages: UIMessage[];
     chatId: string;
-    userId: string;
   };
   const lastMessage = messages[messages.length - 1];
-  const lastMessageContent = getMessageText(lastMessage);
-  const _chats = await db
-    .select()
-    .from(chats)
-    .where(eq(chats.id, chatId))
-    .execute();
+  if (!lastMessage) {
+    return NextResponse.json({ error: "Missing message" }, { status: 400 });
+  }
 
-  if (_chats.length != 1) {
+  const lastMessageContent = getMessageText(lastMessage);
+  const chat = await getOwnedChat(chatId, userId);
+
+  if (!chat) {
     return NextResponse.json({ error: "Chat not found" }, { status: 404 });
   }
-  if (_chats[0].ingestionStatus !== "ready") {
+  if (chat.ingestionStatus !== "ready") {
     return NextResponse.json(
-      { error: `PDF is ${_chats[0].ingestionStatus}` },
+      { error: `PDF is ${chat.ingestionStatus}` },
       { status: 409 },
     );
   }
 
-  const fileKey = _chats[0].fileKey;
+  const fileKey = chat.fileKey;
   const context = await getContext(lastMessageContent, fileKey);
-  console.log("RAG context", {
+  console.log("RAG context retrieved", {
     chatId,
-    fileKey,
-    question: lastMessageContent,
     contextLength: context?.length ?? 0,
-    context,
   });
   const system = `You are a helpful PDF assistant.
 You will be provided with a **CONTEXT BLOCK** containing information extracted from an uploaded PDF. Your primary goal is to accurately answer user questions using *only* the information found within this **CONTEXT BLOCK**.

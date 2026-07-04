@@ -11,16 +11,10 @@ import { useState } from "react";
 type Props = {
   chats: DrizzleChat[];
   chatId: string;
-  userId: string;
   currentChat: DrizzleChat;
 };
 
-export default function ChatWorkspace({
-  chats,
-  chatId,
-  userId,
-  currentChat,
-}: Props) {
+export default function ChatWorkspace({ chats, chatId, currentChat }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
@@ -54,7 +48,6 @@ export default function ChatWorkspace({
       <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.04] shadow-2xl shadow-black/40 backdrop-blur-xl">
         <ChatComponent
           chatId={chatId}
-          userId={userId}
           ingestionStatus={currentChat.ingestionStatus}
         />
       </section>

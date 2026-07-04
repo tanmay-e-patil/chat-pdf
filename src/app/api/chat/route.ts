@@ -6,6 +6,12 @@ import { checkSubscription } from "@/lib/subscriptions";
 import { auth } from "@clerk/nextjs/server";
 import { count, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { z } from "zod";
+
+const createChatSchema = z.object({
+  file_key: z.string().min(1),
+  file_name: z.string().min(1),
+});
 
 export async function POST(req: Request) {
   const userId = await (await auth()).userId;
@@ -32,9 +38,18 @@ export async function POST(req: Request) {
     }
   }
   try {
-    const body = await req.json();
-    const { file_key, file_name }: { file_key: string; file_name: string } =
-      body;
+    const parsed = createChatSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid request body" },
+        { status: 400 },
+      );
+    }
+
+    const { file_key, file_name } = parsed.data;
+    if (!file_key.startsWith(`uploads/${userId}/`)) {
+      return NextResponse.json({ error: "Invalid file key" }, { status: 400 });
+    }
 
     const chatId = await db
       .insert(chats)

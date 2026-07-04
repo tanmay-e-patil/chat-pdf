@@ -3,17 +3,18 @@ import { convertToAscii } from "./utils";
 import { getEmbeddings } from "./embeddings";
 import { env } from "./env/server";
 
+const MIN_CONTEXT_MATCH_SCORE = 0.2;
+
 export async function getContext(query: string, fileKey: string) {
   const queryEmbeddings = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
   console.log("Pinecone matches", {
     index: env.PINECONE_INDEX_NAME,
-    fileKey,
     count: matches?.length ?? 0,
     scores: matches?.map((match) => match.score),
   });
   const qualifyDocs = matches?.filter(
-    (match) => match.score && match.score > 0,
+    (match) => match.score && match.score >= MIN_CONTEXT_MATCH_SCORE,
   );
   type Metadata = {
     pageNumber: number;
