@@ -26,7 +26,7 @@ function PDFViewer({ file_key }: Props) {
         <iframe
           src={data}
           title="PDF preview"
-          sandbox="allow-downloads"
+          sandbox="allow-scripts allow-same-origin allow-downloads"
           className="h-full w-full"
         />
       )}
