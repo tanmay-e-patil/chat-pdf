@@ -11,11 +11,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   chatId: string;
-  userId: string;
   ingestionStatus: "processing" | "ready" | "failed";
 };
 
-const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
+const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
   const [input, setInput] = useState("");
   const queryClient = useQueryClient();
   const { data, isPending } = useQuery({
@@ -45,7 +44,7 @@ const ChatComponent = ({ chatId, userId, ingestionStatus }: Props) => {
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/ai",
-      body: { chatId, userId },
+      body: { chatId },
     }),
   });
 

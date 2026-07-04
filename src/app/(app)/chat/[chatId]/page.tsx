@@ -35,7 +35,6 @@ const ChatPage = async (props: Props) => {
       <ChatWorkspace
         chats={_chats}
         chatId={chatId}
-        userId={userId}
         currentChat={currentChat}
       />
     </main>
