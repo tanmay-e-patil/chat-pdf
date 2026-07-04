@@ -23,7 +23,12 @@ function PDFViewer({ file_key }: Props) {
       {isPending ? (
         <Loader2 className="size-12 animate-spin text-emerald-500" />
       ) : (
-        <iframe src={data} className="h-full w-full" />
+        <iframe
+          src={data}
+          title="PDF preview"
+          sandbox="allow-scripts allow-same-origin allow-downloads"
+          className="h-full w-full"
+        />
       )}
     </div>
   );
