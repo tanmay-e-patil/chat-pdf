@@ -5,6 +5,7 @@ import {
   timestamp,
   uuid,
   varchar,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
@@ -25,20 +26,25 @@ export const chats = pgTable("chats", {
     .notNull()
     .default("processing"),
   ingestionError: text("ingestion_error"),
-});
+}, (table) => [
+  index("chats_user_id_idx").on(table.userId),
+  index("chats_user_id_file_key_idx").on(table.userId, table.fileKey),
+]);
 
 export type DrizzleChat = typeof chats.$inferSelect;
 
 export const messages = pgTable("messages", {
   id: uuid("id").primaryKey().defaultRandom(),
   chatId: uuid("chat_id")
-    .references(() => chats.id)
+    .references(() => chats.id, { onDelete: "cascade" })
     .notNull(),
   content: text("content").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   userId: varchar("user_id", { length: 256 }).notNull(),
   role: userSystemEnum("role").notNull(),
-});
+}, (table) => [
+  index("messages_chat_id_user_id_idx").on(table.chatId, table.userId),
+]);
 
 export const subscriptions = pgTable("user_subscriptions", {
   id: uuid("id").primaryKey().defaultRandom(),
