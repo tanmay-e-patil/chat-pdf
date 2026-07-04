@@ -13,26 +13,9 @@ This project is a web application that allows users to interact with PDF documen
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  User[User browser] --> Next[Next.js app / API routes]
-  Next --> Clerk[Clerk auth]
-  Next --> DB[(Neon Postgres)]
-  Next --> Stripe[Stripe checkout + webhooks]
+![Chat PDF architecture](public/architecture.svg)
 
-  User -->|presigned upload| S3[(AWS S3 PDF bucket)]
-  Next -->|create chat + invoke| Lambda[AWS Lambda ingestion]
-  Lambda -->|read PDF| S3
-  Lambda -->|embed chunks| BedrockEmbed[Amazon Bedrock embeddings]
-  Lambda -->|store vectors| Pinecone[(Pinecone)]
-  Lambda -->|mark ready/failed| DB
-
-  User -->|chat message| Next
-  Next -->|retrieve context| Pinecone
-  Next -->|generate answer| BedrockChat[Amazon Bedrock chat model]
-  Next -->|save messages| DB
-  Next -->|stream answer| User
-```
+Regenerate the diagram with `pnpm generate:architecture`.
 
 ## Technologies Used
 
