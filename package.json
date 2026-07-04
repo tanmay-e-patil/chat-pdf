@@ -41,7 +41,7 @@
     "pdf-parse": "^1.1.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-dropzone": "^14.3.5",
+    "react-dropzone": "^15.0.0",
     "react-hot-toast": "^2.5.1",
     "react-markdown": "^10.1.0",
     "stripe": "^17.6.0",

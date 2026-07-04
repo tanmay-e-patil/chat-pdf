@@ -93,8 +93,8 @@ importers:
         specifier: ^19.1.0
         version: 19.2.7(react@19.2.7)
       react-dropzone:
-        specifier: ^14.3.5
-        version: 14.4.1(react@19.2.7)
+        specifier: ^15.0.0
+        version: 15.0.0(react@19.2.7)
       react-hot-toast:
         specifier: ^2.5.1
         version: 2.6.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -2957,8 +2957,8 @@ packages:
     resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
     engines: {node: '>=4'}
 
-  pg-protocol@1.14.0:
-    resolution: {integrity: sha512-n5taZ1kO3s9ngDTVxsEznOqCyToTgz0FLuPq0B33COy5pPpuWJpY3/2oRBVETuOgzdqRXfWpM9HIhp2LBBT1BA==}
+  pg-protocol@1.15.0:
+    resolution: {integrity: sha512-cq9sECI5s0+uPUXjbz8ioyPJni6RzsRib0US67i5IoTZKw8fNeYlVE7u8F4dG7vEJJtc5wdD1K189lCCUwqWTQ==}
 
   pg-types@4.1.0:
     resolution: {integrity: sha512-o2XFanIMy/3+mThw69O8d4n1E5zsLhdO+OPqswezu7Z5ekP4hYDqlDjlmOpYMbzY2Br0ufCwJLdDIXeNVwcWFg==}
@@ -3108,8 +3108,8 @@ packages:
     peerDependencies:
       react: ^19.2.7
 
-  react-dropzone@14.4.1:
-    resolution: {integrity: sha512-QDuV76v3uKbHiH34SpwifZ+gOLi1+RdsCO1kl5vxMT4wW8R82+sthjvBw4th3NHF/XX6FBsqDYZVNN+pnhaw0g==}
+  react-dropzone@15.0.0:
+    resolution: {integrity: sha512-lGjYV/EoqEjEWPnmiSvH4v5IoIAwQM2W4Z1C0Q/Pw2xD0eVzKPS359BQTUMum+1fa0kH2nrKjuavmTPOGhpLPg==}
     engines: {node: '>= 10.13'}
     peerDependencies:
       react: '>= 16.8 || 18.0.0'
@@ -4778,7 +4778,7 @@ snapshots:
   '@types/pg@8.11.6':
     dependencies:
       '@types/node': 20.19.43
-      pg-protocol: 1.14.0
+      pg-protocol: 1.15.0
       pg-types: 4.1.0
     optional: true
 
@@ -6507,7 +6507,7 @@ snapshots:
   pg-numeric@1.0.2:
     optional: true
 
-  pg-protocol@1.14.0:
+  pg-protocol@1.15.0:
     optional: true
 
   pg-types@4.1.0:
@@ -6597,7 +6597,7 @@ snapshots:
       react: 19.2.7
       scheduler: 0.27.0
 
-  react-dropzone@14.4.1(react@19.2.7):
+  react-dropzone@15.0.0(react@19.2.7):
     dependencies:
       attr-accept: 2.2.5
       file-selector: 2.1.2
