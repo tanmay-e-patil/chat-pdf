@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
@@ -36,6 +36,7 @@ export function Uploader() {
   });
 
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async ({
       file_key,
@@ -62,6 +63,12 @@ export function Uploader() {
         return;
       }
       return resJson;
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ["chat"] });
+      if (data?.chat_id) {
+        await queryClient.invalidateQueries({ queryKey: ["chat", data.chat_id] });
+      }
     },
   });
 

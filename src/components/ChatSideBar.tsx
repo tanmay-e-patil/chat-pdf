@@ -11,7 +11,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
@@ -24,6 +24,7 @@ type Props = {
 
 const ChatSideBar = ({ chats, chatId, onCollapse }: Props) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async ({ id }: { id: string }) => {
       const response = await fetch(`/api/chat/${id}`, {
@@ -42,6 +43,12 @@ const ChatSideBar = ({ chats, chatId, onCollapse }: Props) => {
       if (id === chatId) router.push("/");
       router.refresh();
       return resJson;
+    },
+    onSuccess: async (_data, { id }) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["chat", id] }),
+        queryClient.invalidateQueries({ queryKey: ["chat-status", id] }),
+      ]);
     },
   });
 
