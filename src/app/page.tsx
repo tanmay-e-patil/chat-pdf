@@ -15,7 +15,14 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "ChatPDF | Cited AI answers for PDFs",
+  description:
+    "Upload PDFs and ask questions with cited answers grounded in your documents.",
+};
 
 const ctaLabel = "Start analyzing free";
 
