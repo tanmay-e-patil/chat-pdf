@@ -1,3 +1,4 @@
+import { getAuthenticatedUserId, getOwnedChatByFileKey } from "@/lib/authz";
 import { envClient } from "@/lib/env/client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { NextResponse } from "next/server";
@@ -5,6 +6,11 @@ import { S3 } from "@/lib/s3/S3Client";
 
 export async function DELETE(request: Request) {
   try {
+    const userId = await getAuthenticatedUserId();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
     const fileKey = body.key;
 
@@ -13,6 +19,10 @@ export async function DELETE(request: Request) {
         { error: "Missing or invalid object key" },
         { status: 400 },
       );
+    }
+    const chat = await getOwnedChatByFileKey(fileKey, userId);
+    if (!chat) {
+      return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
 
     const command = new DeleteObjectCommand({
