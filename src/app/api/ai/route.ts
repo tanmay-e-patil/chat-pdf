@@ -37,12 +37,9 @@ export async function POST(req: Request) {
 
   const fileKey = chat.fileKey;
   const context = await getContext(lastMessageContent, fileKey);
-  console.log("RAG context", {
+  console.log("RAG context retrieved", {
     chatId,
-    fileKey,
-    question: lastMessageContent,
     contextLength: context?.length ?? 0,
-    context,
   });
   const system = `You are a helpful PDF assistant.
 You will be provided with a **CONTEXT BLOCK** containing information extracted from an uploaded PDF. Your primary goal is to accurately answer user questions using *only* the information found within this **CONTEXT BLOCK**.
