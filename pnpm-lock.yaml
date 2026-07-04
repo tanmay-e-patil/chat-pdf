@@ -34,7 +34,7 @@ importers:
         version: 6.39.5(next@15.5.19(@opentelemetry/api@1.9.1)(@playwright/test@1.60.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@langchain/community':
         specifier: ^1.1.29
-        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)
+        version: 1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)
       '@langchain/core':
         specifier: ^1.1.49
         version: 1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0)
@@ -133,8 +133,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       '@types/node':
-        specifier: ^20
-        version: 20.19.43
+        specifier: ^26
+        version: 26.0.0
       '@types/pdf-parse':
         specifier: ^1.1.5
         version: 1.1.5
@@ -415,8 +415,8 @@ packages:
   '@borewit/text-codec@0.2.2':
     resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
 
-  '@browserbasehq/sdk@2.14.0':
-    resolution: {integrity: sha512-DqVfjlgt74vPWfWiCp4VPtiMNJxg2yBZwio2uOfnpV1aJM0OWZR4AJrt/4df+xgQQ/guRpds5do41ycrDaYt3w==}
+  '@browserbasehq/sdk@2.14.1':
+    resolution: {integrity: sha512-Ahmzb5+82ePgSGwouKEoAhiGy8mJ3RbCl+uigfGfVc60zseYIftcMiDPXSmrTQr1NHaATRx4cJlynP8ZUweXtg==}
 
   '@browserbasehq/stagehand@1.14.0':
     resolution: {integrity: sha512-Hi/EzgMFWz+FKyepxHTrqfTPjpsuBS4zRy3e9sbMpBgLPv+9c0R+YZEvS7Bw4mTS66QtvvURRT6zgDGFotthVQ==}
@@ -1969,8 +1969,8 @@ packages:
   '@types/node@18.19.80':
     resolution: {integrity: sha512-kEWeMwMeIvxYkeg1gTc01awpwLbfMRZXdIhwRcakd/KlK53jmRC26LqcbIt7fnAQTu5GzlnWmzA3H6+l1u6xxQ==}
 
-  '@types/node@20.19.43':
-    resolution: {integrity: sha512-6oYBAi5ikg4Pl+kGsoYtawUMBT2zZMCvPNF7pVLnHZfd1zf38DRiWn/gT01RYCdUqkv7Fhr+C9ot4/tb+2sVvA==}
+  '@types/node@26.0.0':
+    resolution: {integrity: sha512-vf2YFi1iY9lHGwNJMs01biZFbKJkrZR1T6/MlzjhJLPdntOHLhTrDSnSVcdtvjihi4VQNlrFRIxLsDBlQpAipA==}
 
   '@types/pdf-parse@1.1.5':
     resolution: {integrity: sha512-kBfrSXsloMnUJOKi25s3+hRmkycHfLK6A09eRGqF/N8BkQoPUmaCr+q8Cli5FnfohEz/rsv82zAiPz/LXtOGhA==}
@@ -3706,8 +3706,8 @@ packages:
     resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
     engines: {node: '>=4'}
 
-  pg-protocol@1.14.0:
-    resolution: {integrity: sha512-n5taZ1kO3s9ngDTVxsEznOqCyToTgz0FLuPq0B33COy5pPpuWJpY3/2oRBVETuOgzdqRXfWpM9HIhp2LBBT1BA==}
+  pg-protocol@1.15.0:
+    resolution: {integrity: sha512-cq9sECI5s0+uPUXjbz8ioyPJni6RzsRib0US67i5IoTZKw8fNeYlVE7u8F4dG7vEJJtc5wdD1K189lCCUwqWTQ==}
 
   pg-types@4.1.0:
     resolution: {integrity: sha512-o2XFanIMy/3+mThw69O8d4n1E5zsLhdO+OPqswezu7Z5ekP4hYDqlDjlmOpYMbzY2Br0ufCwJLdDIXeNVwcWFg==}
@@ -3962,6 +3962,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
@@ -4210,8 +4215,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici-types@6.21.0:
-    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
@@ -4855,7 +4860,7 @@ snapshots:
 
   '@borewit/text-codec@0.2.2': {}
 
-  '@browserbasehq/sdk@2.14.0':
+  '@browserbasehq/sdk@2.14.1':
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -4870,7 +4875,7 @@ snapshots:
   '@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       '@anthropic-ai/sdk': 0.27.3
-      '@browserbasehq/sdk': 2.14.0
+      '@browserbasehq/sdk': 2.14.1
       '@playwright/test': 1.60.0
       deepmerge: 4.3.1
       dotenv: 16.6.1
@@ -5384,7 +5389,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)':
+  '@langchain/community@1.1.29(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-lambda@3.1073.0)(@aws-sdk/client-s3@3.1066.0)(@aws-sdk/credential-provider-node@3.972.57)(@browserbasehq/sdk@2.14.1)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.13)(@langchain/core@1.1.49(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.1))(@pinecone-database/pinecone@4.1.0)(@smithy/eventstream-codec@4.4.1)(@smithy/signature-v4@5.4.6)(@smithy/util-utf8@4.4.1)(fast-xml-parser@5.7.3)(ibm-cloud-sdk-core@5.4.20)(ignore@7.0.5)(jsonwebtoken@9.0.3)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(pdf-parse@1.1.4)(playwright@1.60.0)(ws@8.21.0)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.60.0)(deepmerge@4.3.1)(dotenv@16.6.1)(openai@6.42.0(ws@8.21.0)(zod@3.25.76))(zod@3.25.76)
       '@ibm-cloud/watsonx-ai': 1.7.13
@@ -5405,7 +5410,7 @@ snapshots:
       '@aws-sdk/client-lambda': 3.1073.0
       '@aws-sdk/client-s3': 3.1066.0
       '@aws-sdk/credential-provider-node': 3.972.57
-      '@browserbasehq/sdk': 2.14.0
+      '@browserbasehq/sdk': 2.14.1
       '@neondatabase/serverless': 1.1.0
       '@pinecone-database/pinecone': 4.1.0
       '@smithy/eventstream-codec': 4.4.1
@@ -5818,7 +5823,7 @@ snapshots:
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 20.19.43
+      '@types/node': 26.0.0
       form-data: 4.0.6
 
   '@types/node@18.19.130':
@@ -5829,18 +5834,18 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.19.43':
+  '@types/node@26.0.0':
     dependencies:
-      undici-types: 6.21.0
+      undici-types: 8.3.0
 
   '@types/pdf-parse@1.1.5':
     dependencies:
-      '@types/node': 20.19.43
+      '@types/node': 26.0.0
 
   '@types/pg@8.11.6':
     dependencies:
-      '@types/node': 20.19.43
-      pg-protocol: 1.14.0
+      '@types/node': 26.0.0
+      pg-protocol: 1.15.0
       pg-types: 4.1.0
     optional: true
 
@@ -7040,7 +7045,7 @@ snapshots:
       jsonwebtoken: 9.0.3
       load-esm: 1.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.16.1(debug@4.3.4))
+      retry-axios: 2.6.0(axios@1.16.1)
       tough-cookie: 4.1.3
     transitivePeerDependencies:
       - supports-color
@@ -7251,7 +7256,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.8.4
+      semver: 7.8.5
 
   jsx-ast-utils@3.3.5:
     dependencies:
@@ -7837,7 +7842,7 @@ snapshots:
   pg-numeric@1.0.2:
     optional: true
 
-  pg-protocol@1.14.0:
+  pg-protocol@1.15.0:
     optional: true
 
   pg-types@4.1.0:
@@ -8021,7 +8026,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.16.1(debug@4.3.4)):
+  retry-axios@2.6.0(axios@1.16.1):
     dependencies:
       axios: 1.16.1(debug@4.3.4)
 
@@ -8057,6 +8062,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.8.4: {}
+
+  semver@7.8.5: {}
 
   server-only@0.0.1: {}
 
@@ -8237,7 +8244,7 @@ snapshots:
 
   stripe@17.7.0:
     dependencies:
-      '@types/node': 20.19.43
+      '@types/node': 26.0.0
       qs: 6.15.2
 
   strnum@2.4.0:
@@ -8381,7 +8388,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici-types@6.21.0: {}
+  undici-types@8.3.0: {}
 
   unified@11.0.5:
     dependencies:
