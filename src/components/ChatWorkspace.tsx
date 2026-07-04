@@ -14,11 +14,7 @@ type Props = {
   currentChat: DrizzleChat;
 };
 
-export default function ChatWorkspace({
-  chats,
-  chatId,
-  currentChat,
-}: Props) {
+export default function ChatWorkspace({ chats, chatId, currentChat }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (

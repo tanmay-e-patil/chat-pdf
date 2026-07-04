@@ -40,7 +40,10 @@ export async function POST(req: Request) {
   try {
     const parsed = createChatSchema.safeParse(await req.json());
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid request body" },
+        { status: 400 },
+      );
     }
 
     const { file_key, file_name } = parsed.data;
