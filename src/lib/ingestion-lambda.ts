@@ -1,3 +1,4 @@
+import "./lambda-server-only";
 import { processPdfIngestion } from "./ingestion";
 
 export async function handler(event: { chatId: string; fileKey: string }) {

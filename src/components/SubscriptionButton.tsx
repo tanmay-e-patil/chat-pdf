@@ -11,7 +11,7 @@ const SubscriptionButton = ({ isPro }: Props) => {
   const handleSubscription = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/stripe");
+      const response = await fetch("/api/stripe", { method: "POST" });
       const data = await response.json();
       window.location.href = data.url;
     } catch (error) {

@@ -25,7 +25,7 @@ export async function getContext(query: string, fileKey: string) {
   return docs?.join("\n").substring(0, 3000);
 }
 
-export async function getMatchesFromEmbeddings(
+async function getMatchesFromEmbeddings(
   embeddings: number[],
   fileKey: string,
 ) {

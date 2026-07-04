@@ -5,6 +5,7 @@ import ChatSideBar from "@/components/ChatSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import { Button } from "@/components/ui/button";
 import type { DrizzleChat } from "@/lib/db/schema";
+import type { UIMessage } from "ai";
 import { PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 
@@ -12,9 +13,15 @@ type Props = {
   chats: DrizzleChat[];
   chatId: string;
   currentChat: DrizzleChat;
+  initialMessages: UIMessage[];
 };
 
-export default function ChatWorkspace({ chats, chatId, currentChat }: Props) {
+export default function ChatWorkspace({
+  chats,
+  chatId,
+  currentChat,
+  initialMessages,
+}: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
@@ -49,6 +56,7 @@ export default function ChatWorkspace({ chats, chatId, currentChat }: Props) {
         <ChatComponent
           chatId={chatId}
           ingestionStatus={currentChat.ingestionStatus}
+          initialMessages={initialMessages}
         />
       </section>
     </div>

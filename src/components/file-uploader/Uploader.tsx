@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
@@ -26,6 +26,31 @@ interface UploaderState {
   objectUrl?: string;
 }
 
+function UploadContent({
+  fileState,
+  isDragActive,
+}: {
+  fileState: UploaderState;
+  isDragActive: boolean;
+}) {
+  if (fileState.uploading && fileState.file) {
+    return (
+      <RenderUploadingState
+        file={fileState.file}
+        progress={fileState.progress}
+      />
+    );
+  }
+  if (fileState.error) {
+    return <RenderErrorState message={fileState.errorMessage} />;
+  }
+  if (fileState.objectUrl) {
+    return <RenderUploadedState />;
+  }
+
+  return <RenderEmptyState isDragActive={isDragActive} />;
+}
+
 export function Uploader() {
   const [fileState, setFileState] = useState<UploaderState>({
     error: false,
@@ -36,6 +61,7 @@ export function Uploader() {
   });
 
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async ({
       file_key,
@@ -63,26 +89,13 @@ export function Uploader() {
       }
       return resJson;
     },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ["chat"] });
+      if (data?.chat_id) {
+        await queryClient.invalidateQueries({ queryKey: ["chat", data.chat_id] });
+      }
+    },
   });
-
-  function renderContent() {
-    if (fileState.uploading && fileState.file) {
-      return (
-        <RenderUploadingState
-          file={fileState.file}
-          progress={fileState.progress}
-        />
-      );
-    }
-    if (fileState.error) {
-      return <RenderErrorState message={fileState.errorMessage} />;
-    }
-    if (fileState.objectUrl) {
-      return <RenderUploadedState />;
-    }
-
-    return <RenderEmptyState isDragActive={isDragActive} />;
-  }
 
   async function uploadFile(file: File) {
     setFileState((prev) => ({
@@ -235,7 +248,7 @@ export function Uploader() {
       <div className="pointer-events-none absolute inset-x-12 top-0 h-24 bg-emerald-400/10 blur-3xl transition group-hover:bg-emerald-400/20" />
       <CardContent className="relative flex h-full w-full cursor-pointer items-center justify-center p-6 md:p-8">
         <input {...getInputProps()} />
-        {renderContent()}
+        <UploadContent fileState={fileState} isDragActive={isDragActive} />
       </CardContent>
     </Card>
   );

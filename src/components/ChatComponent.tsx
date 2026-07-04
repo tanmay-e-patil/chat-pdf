@@ -12,20 +12,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 type Props = {
   chatId: string;
   ingestionStatus: "processing" | "ready" | "failed";
+  initialMessages: UIMessage[];
 };
 
-const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
+const ChatComponent = ({ chatId, ingestionStatus, initialMessages }: Props) => {
   const [input, setInput] = useState("");
   const queryClient = useQueryClient();
-  const { data, isPending } = useQuery({
-    queryKey: ["chat", chatId],
-    queryFn: async () => {
-      const response = await fetch(`/api/chat/${chatId}/messages`);
-      const json = await response.json();
-      return json.map(toUIMessage);
-    },
-  });
-
   const { data: chat } = useQuery({
     queryKey: ["chat-status", chatId],
     queryFn: async () => {
@@ -42,6 +34,8 @@ const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
   const currentStatus = chat.ingestionStatus;
 
   const { messages, sendMessage, setMessages } = useChat({
+    id: chatId,
+    messages: initialMessages,
     transport: new DefaultChatTransport({
       api: "/api/ai",
       body: { chatId },
@@ -60,10 +54,6 @@ const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
       await queryClient.invalidateQueries({ queryKey: ["chat", chatId] });
     },
   });
-
-  useEffect(() => {
-    if (data) setMessages(data);
-  }, [data, setMessages]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,7 +100,7 @@ const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
         className="flex-1 overflow-y-auto px-2 py-4 scrollbar-hidden"
         id="message-container"
       >
-        <MessageList messages={messages} isLoading={isPending} />
+        <MessageList messages={messages} isLoading={false} />
       </div>
       <form onSubmit={handleSubmit} className="border-t border-white/10 p-4">
         <div className="flex gap-2 rounded-2xl border border-white/10 bg-slate-950/70 p-2">
@@ -138,15 +128,3 @@ const ChatComponent = ({ chatId, ingestionStatus }: Props) => {
 };
 
 export default ChatComponent;
-
-function toUIMessage(message: {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-}): UIMessage {
-  return {
-    id: message.id,
-    role: message.role,
-    parts: [{ type: "text", text: message.content }],
-  };
-}

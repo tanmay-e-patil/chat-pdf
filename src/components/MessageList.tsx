@@ -71,8 +71,9 @@ const MessageList = ({ messages, isLoading }: Props) => {
 export default MessageList;
 
 function getMessageText(message: UIMessage) {
-  return message.parts
-    .filter((part) => part.type === "text")
-    .map((part) => part.text)
-    .join("\n");
+  const textParts: string[] = [];
+  for (const part of message.parts) {
+    if (part.type === "text") textParts.push(part.text);
+  }
+  return textParts.join("\n");
 }

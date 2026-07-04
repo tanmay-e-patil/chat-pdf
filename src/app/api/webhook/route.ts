@@ -25,13 +25,16 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     console.log(`Payment successful for session ${session.id}`);
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription! as string,
-    );
     if (!session?.metadata?.userId) {
       console.error("Missing userId in metadata");
       return new NextResponse("Missing userId in metadata", { status: 400 });
     }
+    const subscriptionId = session.subscription as string | null;
+    if (!subscriptionId) {
+      console.error("Missing subscription on checkout session");
+      return new NextResponse("Missing subscription", { status: 400 });
+    }
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     await db.insert(subscriptions).values({
       userId: session.metadata.userId,
       stripeCustomerId: subscription.customer as string,
@@ -42,13 +45,16 @@ export async function POST(req: Request) {
   }
   if (event.type === "invoice.payment_succeeded") {
     console.log(`Invoice payment succeeded for session ${session.id}`);
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription! as string,
-    );
     if (!session?.metadata?.userId) {
       console.error("Missing userId in metadata");
       return new NextResponse("Missing userId in metadata", { status: 400 });
     }
+    const subscriptionId = session.subscription as string | null;
+    if (!subscriptionId) {
+      console.error("Missing subscription on invoice");
+      return new NextResponse("Missing subscription", { status: 400 });
+    }
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     await db
       .update(subscriptions)
       .set({

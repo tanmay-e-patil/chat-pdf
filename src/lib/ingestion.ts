@@ -30,25 +30,25 @@ export async function triggerIngestion(job: IngestionJob) {
   );
 }
 
-export async function processPdfIngestion({ chatId, fileKey }: IngestionJob) {
-  try {
-    await db
-      .update(chats)
-      .set({ ingestionStatus: "processing", ingestionError: null })
-      .where(eq(chats.id, chatId));
+export function processPdfIngestion({ chatId, fileKey }: IngestionJob) {
+  return updateChatIngestion(chatId, "processing", null)
+    .then(() => loadS3IntoPinecone(fileKey))
+    .then(() => updateChatIngestion(chatId, "ready", null))
+    .catch((error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      return updateChatIngestion(chatId, "failed", message).then(() => {
+        throw error;
+      });
+    });
+}
 
-    await loadS3IntoPinecone(fileKey);
-
-    await db
-      .update(chats)
-      .set({ ingestionStatus: "ready", ingestionError: null })
-      .where(eq(chats.id, chatId));
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    await db
-      .update(chats)
-      .set({ ingestionStatus: "failed", ingestionError: message })
-      .where(eq(chats.id, chatId));
-    throw error;
-  }
+function updateChatIngestion(
+  chatId: string,
+  ingestionStatus: "processing" | "ready" | "failed",
+  ingestionError: string | null,
+) {
+  return db
+    .update(chats)
+    .set({ ingestionStatus, ingestionError })
+    .where(eq(chats.id, chatId));
 }
