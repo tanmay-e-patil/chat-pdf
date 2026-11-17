@@ -1,4 +1,5 @@
 import { getAuthenticatedUserId, getOwnedChat } from "@/lib/authz";
+import { clearConversation } from "@/lib/chat-messages";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { deleteDocumentIndex, indexStateOf } from "@/lib/document-index";
@@ -46,7 +47,8 @@ export const DELETE = async (
     deleteFromS3(chat.fileKey),
   ]);
 
-  // Messages cascade with the chat (migration 0002).
+  // Don't rely on the 0002 cascade: databases without it reject the chat delete.
+  await clearConversation(chatId, userId);
   await db
     .delete(chats)
     .where(and(eq(chats.id, chatId), eq(chats.userId, userId)))
