@@ -41,7 +41,6 @@ function PDFViewer({ fileKey, jump }: Props) {
           ref={iframeRef}
           src={`${baseUrl}#${VIEW_PARAMS}`}
           title="PDF preview"
-          sandbox="allow-scripts allow-same-origin allow-downloads"
           className="h-full w-full"
         />
       )}
