@@ -1,7 +1,7 @@
 import { getAuthenticatedUserId, getOwnedChat } from "@/lib/authz";
 import { db } from "@/lib/db";
-import { chats, messages } from "@/lib/db/schema";
-import { deleteFromPinecone } from "@/lib/pinecone";
+import { chats } from "@/lib/db/schema";
+import { deleteDocumentIndex, indexStateOf } from "@/lib/document-index";
 import { deleteFromS3 } from "@/lib/s3";
 import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
@@ -22,7 +22,7 @@ export const GET = async (
     return NextResponse.json({ error: "Chat not found" }, { status: 404 });
   }
 
-  return NextResponse.json(chat, { status: 200 });
+  return NextResponse.json({ indexState: indexStateOf(chat) }, { status: 200 });
 };
 
 export const DELETE = async (
@@ -42,14 +42,11 @@ export const DELETE = async (
   }
 
   await Promise.allSettled([
-    deleteFromPinecone(chat.fileKey),
+    deleteDocumentIndex(chat),
     deleteFromS3(chat.fileKey),
   ]);
 
-  await db
-    .delete(messages)
-    .where(and(eq(messages.chatId, chatId), eq(messages.userId, userId)))
-    .execute();
+  // Messages cascade with the chat (migration 0002).
   await db
     .delete(chats)
     .where(and(eq(chats.id, chatId), eq(chats.userId, userId)))

@@ -17,7 +17,6 @@ export const env = createEnv({
       .default("amazon.titan-embed-text-v1"),
     BEDROCK_CHAT_MODEL_ID: z.string().default("us.amazon.nova-lite-v1:0"),
     AWS_INGESTION_LAMBDA_NAME: z.string().optional(),
-    PINECONE_ENVIRONMENT: z.string().min(1),
     PINECONE_API_KEY: z.string().min(1),
     PINECONE_INDEX_NAME: z.string().default("chat-pdf-aws"),
     STRIPE_SECRET_KEY: z.string().min(1).optional(),

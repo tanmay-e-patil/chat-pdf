@@ -18,7 +18,6 @@ export default function RootLayout({
           src="https://rybbit.tanmayep.dev/api/script.js"
           data-site-id="3"
           data-track-errors="true"
-          data-session-replay="true"
           strategy="afterInteractive"
         />
         <Providers>

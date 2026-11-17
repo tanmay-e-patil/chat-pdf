@@ -1,7 +1,5 @@
 import { getAuthenticatedUserId, getOwnedChat } from "@/lib/authz";
-import { db } from "@/lib/db";
-import { messages } from "@/lib/db/schema";
-import { and, eq } from "drizzle-orm";
+import { clearConversation, loadConversation } from "@/lib/chat-messages";
 import { NextResponse } from "next/server";
 
 export const GET = async (
@@ -19,12 +17,9 @@ export const GET = async (
     return NextResponse.json({ error: "Chat not found" }, { status: 404 });
   }
 
-  const _messages = await db
-    .select()
-    .from(messages)
-    .where(and(eq(messages.chatId, chatId), eq(messages.userId, userId)))
-    .execute();
-  return NextResponse.json(_messages, { status: 200 });
+  return NextResponse.json(await loadConversation(chatId, userId), {
+    status: 200,
+  });
 };
 
 export const DELETE = async (
@@ -43,9 +38,6 @@ export const DELETE = async (
     return NextResponse.json({ error: "Chat not found" }, { status: 404 });
   }
 
-  await db
-    .delete(messages)
-    .where(and(eq(messages.chatId, chatId), eq(messages.userId, userId)))
-    .execute();
+  await clearConversation(chatId, userId);
   return NextResponse.json({ ok: true }, { status: 200 });
 };

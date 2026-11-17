@@ -1,28 +1,35 @@
 "use client";
 
 import ChatComponent from "@/components/ChatComponent";
-import ChatSideBar from "@/components/ChatSideBar";
+import ChatSideBar, { type SidebarChat } from "@/components/ChatSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import { Button } from "@/components/ui/button";
-import type { DrizzleChat } from "@/lib/db/schema";
-import type { UIMessage } from "ai";
+import type { ChatUIMessage, IndexState } from "@/lib/document-index/shared";
 import { PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
-  chats: DrizzleChat[];
+  chats: SidebarChat[];
   chatId: string;
-  currentChat: DrizzleChat;
-  initialMessages: UIMessage[];
+  fileKey: string;
+  initialIndexState: IndexState;
+  initialMessages: ChatUIMessage[];
 };
+
+// `seq` changes on every click so citing the same page twice still jumps.
+export type PageJump = { page: number; seq: number };
 
 export default function ChatWorkspace({
   chats,
   chatId,
-  currentChat,
+  fileKey,
+  initialIndexState,
   initialMessages,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [jump, setJump] = useState<PageJump | null>(null);
+  const onCitePage = (page: number) =>
+    setJump((previous) => ({ page, seq: (previous?.seq ?? 0) + 1 }));
 
   return (
     <div
@@ -50,13 +57,14 @@ export default function ChatWorkspace({
         </Button>
       )}
       <section className="w-full justify-self-center overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl shadow-black/40">
-        <PDFViewer file_key={currentChat.fileKey} />
+        <PDFViewer fileKey={fileKey} jump={jump} />
       </section>
       <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.04] shadow-2xl shadow-black/40 backdrop-blur-xl">
         <ChatComponent
           chatId={chatId}
-          ingestionStatus={currentChat.ingestionStatus}
+          initialIndexState={initialIndexState}
           initialMessages={initialMessages}
+          onCitePage={onCitePage}
         />
       </section>
     </div>
