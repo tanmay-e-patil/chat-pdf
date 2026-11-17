@@ -53,7 +53,7 @@ flowchart LR
 2. Install dependencies with `pnpm install`.
 3. Configure the environment variables listed below.
 4. Create a Pinecone **serverless** index (dimension 1536 for Titan Text Embeddings v1, metric cosine) named after `PINECONE_INDEX_NAME`.
-5. Apply the SQL files in `migrations/` in order, for example `psql "$DATABASE_URL" -f migrations/0000_initial_schema.sql`, then `0001`, `0002`, `0003`.
+5. Run `pnpm db:migrate` (drizzle-kit) to apply `migrations/`. Applied migrations are tracked in `drizzle.__drizzle_migrations`. Nothing runs migrations automatically, so run it before deploying code that needs a new migration. After changing `src/lib/db/schema.ts`, run `pnpm db:generate` to create the next migration.
 6. Run the development server with `pnpm dev`.
 7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
