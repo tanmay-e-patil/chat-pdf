@@ -2,11 +2,25 @@
 
 import ChatComponent from "@/components/ChatComponent";
 import ChatSideBar, { type SidebarChat } from "@/components/ChatSideBar";
-import PDFViewer from "@/components/PDFViewer";
 import { Button } from "@/components/ui/button";
-import type { ChatUIMessage, IndexState } from "@/lib/document-index/shared";
-import { PanelLeftOpen } from "lucide-react";
+import type {
+  ChatUIMessage,
+  Citation,
+  IndexState,
+} from "@/lib/document-index/shared";
+import { Loader2, PanelLeftOpen } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useState } from "react";
+
+// pdf.js needs browser globals, so the viewer never renders on the server.
+const PDFViewer = dynamic(() => import("@/components/PDFViewer"), {
+  ssr: false,
+  loading: () => (
+    <div className="grid h-full place-items-center">
+      <Loader2 className="size-12 animate-spin text-emerald-500" />
+    </div>
+  ),
+});
 
 type Props = {
   chats: SidebarChat[];
@@ -16,8 +30,8 @@ type Props = {
   initialMessages: ChatUIMessage[];
 };
 
-// `seq` changes on every click so citing the same page twice still jumps.
-export type PageJump = { page: number; seq: number };
+// `seq` changes on every click so citing the same passage twice still jumps.
+export type CiteTarget = Citation & { seq: number };
 
 export default function ChatWorkspace({
   chats,
@@ -27,9 +41,9 @@ export default function ChatWorkspace({
   initialMessages,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [jump, setJump] = useState<PageJump | null>(null);
-  const onCitePage = (page: number) =>
-    setJump((previous) => ({ page, seq: (previous?.seq ?? 0) + 1 }));
+  const [target, setTarget] = useState<CiteTarget | null>(null);
+  const onCite = (citation: Citation) =>
+    setTarget((previous) => ({ ...citation, seq: (previous?.seq ?? 0) + 1 }));
 
   return (
     <div
@@ -57,14 +71,14 @@ export default function ChatWorkspace({
         </Button>
       )}
       <section className="w-full justify-self-center overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl shadow-black/40">
-        <PDFViewer fileKey={fileKey} jump={jump} />
+        <PDFViewer fileKey={fileKey} target={target} />
       </section>
       <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.04] shadow-2xl shadow-black/40 backdrop-blur-xl">
         <ChatComponent
           chatId={chatId}
           initialIndexState={initialIndexState}
           initialMessages={initialMessages}
-          onCitePage={onCitePage}
+          onCite={onCite}
         />
       </section>
     </div>
