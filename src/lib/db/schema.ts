@@ -1,4 +1,6 @@
 import {
+  integer,
+  jsonb,
   pgEnum,
   pgTable,
   text,
@@ -8,8 +10,8 @@ import {
   index,
 } from "drizzle-orm/pg-core";
 
-const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
-const ingestionStatusEnum = pgEnum("ingestion_status_enum", [
+export const userSystemEnum = pgEnum("user_system_enum", ["assistant", "user"]);
+export const ingestionStatusEnum = pgEnum("ingestion_status_enum", [
   "processing",
   "ready",
   "failed",
@@ -28,6 +30,11 @@ export const chats = pgTable(
       .notNull()
       .default("processing"),
     ingestionError: text("ingestion_error"),
+    ingestionStartedAt: timestamp("ingestion_started_at", {
+      withTimezone: true,
+      mode: "date",
+    }),
+    indexVersion: integer("index_version").notNull().default(0),
   },
   (table) => [
     index("chats_user_id_idx").on(table.userId),
@@ -45,6 +52,7 @@ export const messages = pgTable(
       .references(() => chats.id, { onDelete: "cascade" })
       .notNull(),
     content: text("content").notNull(),
+    citations: jsonb("citations").notNull().default([]),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     userId: varchar("user_id", { length: 256 }).notNull(),
     role: userSystemEnum("role").notNull(),

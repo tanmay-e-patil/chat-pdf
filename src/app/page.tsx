@@ -30,7 +30,7 @@ const benefits = [
   {
     icon: Search,
     title: "Get the answer, not the page hunt",
-    text: "Ask naturally and jump straight to cited passages that prove the answer.",
+    text: "Ask naturally and jump straight to the cited page that proves the answer.",
   },
   {
     icon: MessageSquareText,
@@ -40,7 +40,7 @@ const benefits = [
   {
     icon: Zap,
     title: "Compress hours into a review loop",
-    text: "Summarize, compare, extract actions, and move on while the insight is fresh.",
+    text: "Summarize, surface risks, and extract action items, with page citations on every claim.",
   },
 ];
 
@@ -114,7 +114,7 @@ export default async function Home() {
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
               ChatPDF turns reports, papers, contracts, and manuals into a cited
-              answer engine your team can trust.
+              answer engine you can check page by page.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
@@ -286,9 +286,6 @@ export default async function Home() {
       <footer className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 tanmayep.dev. All rights reserved.</p>
         <div className="flex gap-4">
-          <Link href="/terms" className="transition hover:text-white">
-            Terms of Service
-          </Link>
           <Link href="/privacy" className="transition hover:text-white">
             Privacy
           </Link>

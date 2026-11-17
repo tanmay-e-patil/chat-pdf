@@ -24,7 +24,8 @@ export function RenderEmptyState({ isDragActive }: { isDragActive: boolean }) {
           {isDragActive ? "Release to analyze." : "Drop your PDF here."}
         </p>
         <p className="mt-3 max-w-md text-sm leading-6 text-slate-400">
-          Turn dense documents into cited answers. PDF only, up to 10MB.
+          Turn dense documents into cited answers. Text-based PDFs only (no
+          scans), up to 10MB.
         </p>
         <Button
           className="mt-6 w-fit rounded-full bg-emerald-400 px-6 text-slate-950 hover:bg-emerald-300"
@@ -71,7 +72,9 @@ export function RenderUploadingState({
           <Loader2 className="size-7 animate-spin text-emerald-300" />
         </div>
         <div className="min-w-0">
-          <p className="text-xl font-semibold text-white">Indexing your PDF…</p>
+          <p className="text-xl font-semibold text-white">
+            Uploading your PDF…
+          </p>
           <p className="mt-1 truncate text-sm text-slate-400">{file.name}</p>
         </div>
       </div>
@@ -93,9 +96,9 @@ export function RenderUploadedState() {
       <div className="mb-4 grid size-14 place-items-center rounded-2xl bg-emerald-300/10">
         <CheckCircle2 className="size-7 text-emerald-300" />
       </div>
-      <p className="text-xl font-semibold text-white">PDF ready</p>
+      <p className="text-xl font-semibold text-white">Upload complete</p>
       <p className="mt-2 text-sm text-slate-400">
-        Opening your chat workspace…
+        Opening your workspace. Indexing starts there.
       </p>
       <Loader2 className="mt-5 size-8 animate-spin text-emerald-300" />
     </div>

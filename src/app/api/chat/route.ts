@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { triggerIngestion } from "@/lib/ingestion";
+import { ensureIndexed } from "@/lib/document-index";
 import { getS3Url } from "@/lib/s3";
 import { checkSubscription } from "@/lib/subscriptions";
 import { auth } from "@clerk/nextjs/server";
@@ -51,44 +51,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid file key" }, { status: 400 });
     }
 
-    const chatId = await db
+    const [chat] = await db
       .insert(chats)
       .values({
         fileKey: file_key,
         pdfName: file_name,
         pdfUrl: getS3Url(file_key),
         userId: userId,
-        ingestionStatus: "processing",
       })
-      .returning({
-        insertedId: chats.id,
-      });
+      .returning();
 
-    try {
-      await triggerIngestion({
-        chatId: chatId[0].insertedId,
-        fileKey: file_key,
-      });
-    } catch (error) {
-      await db
-        .update(chats)
-        .set({
-          ingestionStatus: "failed",
-          ingestionError:
-            error instanceof Error ? error.message : String(error),
-        })
-        .where(eq(chats.id, chatId[0].insertedId));
-      throw error;
-    }
+    await ensureIndexed(chat, "upload");
 
-    return NextResponse.json(
-      { chat_id: chatId[0].insertedId },
-      { status: 200 },
-    );
+    return NextResponse.json({ chat_id: chat.id }, { status: 200 });
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: "Internal Server Error" + e },
+      { error: "Internal Server Error" },
       { status: 500 },
     );
   }

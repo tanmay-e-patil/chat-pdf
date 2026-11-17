@@ -1,5 +1,8 @@
 "use client";
-import type { DrizzleChat } from "@/lib/db/schema";
+import {
+  describeIndexState,
+  type IndexState,
+} from "@/lib/document-index/shared";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
@@ -16,8 +19,14 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 
+export type SidebarChat = {
+  id: string;
+  pdfName: string;
+  indexState: IndexState;
+};
+
 type Props = {
-  chats: DrizzleChat[];
+  chats: SidebarChat[];
   chatId: string;
   onCollapse: () => void;
 };
@@ -47,7 +56,7 @@ const ChatSideBar = ({ chats, chatId, onCollapse }: Props) => {
     onSuccess: async (_data, { id }) => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["chat", id] }),
-        queryClient.invalidateQueries({ queryKey: ["chat-status", id] }),
+        queryClient.invalidateQueries({ queryKey: ["index-state", id] }),
       ]);
     },
   });
@@ -99,8 +108,8 @@ const ChatSideBar = ({ chats, chatId, onCollapse }: Props) => {
               <MessageCircle className="mr-2 size-5 shrink-0" />
               <p className="w-full overflow-hidden truncate whitespace-nowrap text-sm text-ellipsis">
                 {chat.pdfName}
-                {chat.ingestionStatus !== "ready" &&
-                  ` (${chat.ingestionStatus})`}
+                {chat.indexState.status !== "ready" &&
+                  ` (${describeIndexState(chat.indexState).headline})`}
               </p>
               <Button
                 variant="ghost"

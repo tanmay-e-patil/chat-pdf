@@ -80,14 +80,13 @@ export function Uploader() {
 
       const resJson = await response.json();
       if (!response.ok) {
-        toast.error(
+        throw new Error(
           response.status === 403
             ? "Error creating chat: " + resJson.error
             : "Error creating chat",
         );
-        return;
       }
-      return resJson;
+      return resJson as { chat_id: string };
     },
     onSuccess: async (data) => {
       await queryClient.invalidateQueries({ queryKey: ["chat"] });
@@ -156,8 +155,14 @@ export function Uploader() {
                 onSuccess: (data) => {
                   if (data?.chat_id) router.push(`/chat/${data.chat_id}`);
                 },
-                onError: (e) => {
-                  console.log(e);
+                onError: (error) => {
+                  toast.error(error.message);
+                  setFileState((prev) => ({
+                    ...prev,
+                    objectUrl: undefined,
+                    error: true,
+                    errorMessage: error.message,
+                  }));
                 },
               },
             );
