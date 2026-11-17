@@ -3,3 +3,7 @@ packages:
 
 minimumReleaseAge: 10080
 trustPolicy: no-downgrade
+
+# react-pdf resolves its worker via new URL("pdfjs-dist/...", import.meta.url) from app code.
+publicHoistPattern:
+  - pdfjs-dist

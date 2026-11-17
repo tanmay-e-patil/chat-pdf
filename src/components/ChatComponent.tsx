@@ -13,6 +13,7 @@ import {
   describeIndexState,
   messageText,
   type ChatUIMessage,
+  type Citation,
   type IndexState,
 } from "@/lib/document-index/shared";
 
@@ -20,14 +21,14 @@ type Props = {
   chatId: string;
   initialIndexState: IndexState;
   initialMessages: ChatUIMessage[];
-  onCitePage: (page: number) => void;
+  onCite: (citation: Citation) => void;
 };
 
 const ChatComponent = ({
   chatId,
   initialIndexState,
   initialMessages,
-  onCitePage,
+  onCite,
 }: Props) => {
   const [input, setInput] = useState("");
   const queryClient = useQueryClient();
@@ -153,7 +154,7 @@ const ChatComponent = ({
         <MessageList
           messages={messages}
           streaming={status === "streaming"}
-          onCitePage={onCitePage}
+          onCite={onCite}
         />
       </div>
       <div className="border-t border-white/10 p-4">

@@ -12,7 +12,7 @@ import {
 type Props = {
   messages: ChatUIMessage[];
   streaming: boolean;
-  onCitePage: (page: number) => void;
+  onCite: (citation: Citation) => void;
 };
 
 const baseComponents: Components = {
@@ -35,7 +35,7 @@ const baseComponents: Components = {
   ),
 };
 
-const MessageList = ({ messages, streaming, onCitePage }: Props) => {
+const MessageList = ({ messages, streaming, onCite }: Props) => {
   return (
     <div className="flex h-full flex-col gap-3 px-3">
       {messages.map((message, index) => {
@@ -87,7 +87,7 @@ const MessageList = ({ messages, streaming, onCitePage }: Props) => {
                           page={page}
                           citation={citations.find((c) => c.page === page)}
                           pending={pending}
-                          onCitePage={onCitePage}
+                          onCite={onCite}
                         />
                       );
                     },
@@ -105,7 +105,7 @@ const MessageList = ({ messages, streaming, onCitePage }: Props) => {
                       page={citation.page}
                       citation={citation}
                       pending={false}
-                      onCitePage={onCitePage}
+                      onCite={onCite}
                     />
                   ))}
                 </div>
@@ -124,12 +124,12 @@ function CitationChip({
   page,
   citation,
   pending,
-  onCitePage,
+  onCite,
 }: {
   page: number;
   citation: Citation | undefined;
   pending: boolean;
-  onCitePage: (page: number) => void;
+  onCite: (citation: Citation) => void;
 }) {
   if (pending) {
     return (
@@ -144,7 +144,7 @@ function CitationChip({
     <button
       type="button"
       title={citation.excerpt}
-      onClick={() => onCitePage(page)}
+      onClick={() => onCite(citation)}
       className="mx-0.5 inline-flex rounded-full bg-emerald-300/15 px-2 text-xs font-medium text-emerald-200 transition hover:bg-emerald-300/30"
     >
       p. {page}
