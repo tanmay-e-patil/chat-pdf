@@ -4,13 +4,14 @@ import { bedrock } from "@/lib/bedrock";
 import type { DrizzleChat } from "@/lib/db/schema";
 import { env } from "@/lib/env/server";
 import {
-  extractCitedPages,
+  citedClaims,
   formatCitationMarker,
   messageText,
   type ChatUIMessage,
   type Citation,
   type IndexState,
 } from "../shared";
+import { excerptFor, excerptOf } from "./excerpt";
 import { indexStateOf } from "./lifecycle";
 import {
   fetchPassages,
@@ -26,7 +27,6 @@ const MIN_MATCH_SCORE = 0.2;
 const HISTORY_MAX_MESSAGES = 12;
 const HISTORY_MAX_CHARS = 24_000;
 const REWRITE_HISTORY_MESSAGES = 6;
-const EXCERPT_CHARS = 280;
 
 declare const readyBrand: unique symbol;
 
@@ -220,15 +220,11 @@ function toModelMessage(message: ChatUIMessage): ModelMessage {
 
 function verify(answer: string, pages: EvidencePage[]): Citation[] {
   const byPage = new Map(pages.map((page) => [page.page, page]));
-  return extractCitedPages(answer).flatMap((page) => {
+  return [...citedClaims(answer)].flatMap(([page, claims]) => {
     const evidence = byPage.get(page);
-    return evidence ? [{ page, excerpt: excerptOf(evidence.best.text) }] : [];
+    if (!evidence) return [];
+    const excerpt =
+      excerptFor(claims, evidence.text) ?? excerptOf(evidence.best.text);
+    return [{ page, excerpt }];
   });
-}
-
-function excerptOf(text: string): string {
-  const flat = text.replace(/\s+/g, " ").trim();
-  return flat.length <= EXCERPT_CHARS
-    ? flat
-    : `${flat.slice(0, EXCERPT_CHARS - 1)}…`;
 }

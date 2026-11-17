@@ -120,12 +120,34 @@ export function formatCitationMarker(page: number): string {
   return `[p. ${page}]`;
 }
 
-export function extractCitedPages(text: string): number[] {
-  const pages = new Set<number>();
+// Each cited page, in first-cited order, with the answer text each of its markers backs:
+// the sentence fragment since the previous marker or sentence boundary.
+export function citedClaims(text: string): Map<number, string[]> {
+  const claims = new Map<number, string[]>();
+  let segmentStart = 0;
+  let previousClaim = "";
   for (const match of text.matchAll(CITATION_MARKER)) {
-    pages.add(Number(match[1]));
+    const page = Number(match[1]);
+    const segment = text.slice(segmentStart, match.index);
+    // "A [p. 1][p. 2]" backs both pages with the same claim.
+    const claim = lastSentence(segment) || previousClaim;
+    const list = claims.get(page) ?? [];
+    if (claim) list.push(claim);
+    claims.set(page, list);
+    segmentStart = match.index + match[0].length;
+    previousClaim = claim;
   }
-  return [...pages];
+  return claims;
+}
+
+function lastSentence(segment: string): string {
+  // A marker placed after the period ("Claim. [p. 3]") still backs that sentence.
+  const body = segment.replace(/[\s.!?]+$/, "");
+  const boundary = Math.max(
+    body.lastIndexOf("\n"),
+    ...[...body.matchAll(/[.!?]\s/g)].map((m) => m.index + 1),
+  );
+  return body.slice(boundary + 1).trim();
 }
 
 export function linkifyCitations(markdown: string): string {
